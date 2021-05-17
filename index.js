@@ -6,7 +6,7 @@ const host = 'localhost';
 const port = 3000;
 
 app.get('/', (req, res) => {
-  res.send('Hello word !!!');
+  res.send('GET /');
 });
 
 app.listen(port, () => {
