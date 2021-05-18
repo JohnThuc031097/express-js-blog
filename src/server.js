@@ -9,11 +9,11 @@ const app = express();
 
 const host = 'localhost';
 const port = 3000;
+const __dirname = path.join(path.resolve(), 'src/');
 const appFolder = {
   resources: 'resources',
   public: 'public'
 };
-const __dirname = path.join(path.resolve(), 'src/');
 
 // Set Folder Static
 app.use(express.static(path.join(__dirname, appFolder.public)));
@@ -32,6 +32,10 @@ app.get('/', (req, res) => {
 
 app.get('/news', (req, res) => {
   res.render('news');
+});
+
+app.get('/search', (req, res) => {
+  res.render('search');
 });
 
 app.listen(port, () => {

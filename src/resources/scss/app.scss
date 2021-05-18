@@ -1,13 +1,7 @@
 @import "variable";
+@import "base";
+@import "grid";
 
-header h1 {
-  color: $red-color;
-}
-
-.container {
-  color: $primary-color;
-}
-
-footer h1 {
-  color: $bule-color;
-}
+// @import "headers/**/*";
+@import "containers/search";
+// @import "footers/**/*";
