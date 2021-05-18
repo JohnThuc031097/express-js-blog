@@ -1,0 +1,13 @@
+@import "variable";
+
+header h1 {
+  color: $red-color;
+}
+
+.container {
+  color: $primary-color;
+}
+
+footer h1 {
+  color: $bule-color;
+}
