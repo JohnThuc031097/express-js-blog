@@ -11,19 +11,24 @@ const host = 'localhost';
 const port = 3000;
 const __dirname = path.join(path.resolve(), 'src/');
 const appFolder = {
-  resources: 'resources',
-  public: 'public'
+  resources: path.join(__dirname, '/resources'),
+  public: __dirname + '/public'
 };
 
 // Set Folder Static
-app.use(express.static(path.join(__dirname, appFolder.public)));
+app.use(express.static(appFolder.public));
 // HTTP logger
 app.use(morgan('dev'));
+// Midleware
+app.use(express.urlencoded({
+  extended: true
+}));
+app.use(express.json());
 
 // Template Handlebars
 app.engine('hbs', handlebars({ extname: '.hbs' }));
 app.set('view engine', 'hbs');
-app.set('views', path.join(__dirname, appFolder.resources, '/views'));
+app.set('views', path.join(appFolder.resources, '/views'));
 
 // HTTP Protocol
 app.get('/', (req, res) => {
@@ -31,11 +36,17 @@ app.get('/', (req, res) => {
 });
 
 app.get('/news', (req, res) => {
+  if (req.query) {
+    console.log(req.query?.txtSearch);
+  }
   res.render('news');
 });
 
 app.get('/search', (req, res) => {
   res.render('search');
+});
+app.post('/search', (req, res) => {
+  res.send(req.body);
 });
 
 app.listen(port, () => {
