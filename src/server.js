@@ -1,9 +1,11 @@
-import path from "path";
-
 import express from 'express';
 import handlebars from "express-handlebars";
 import morgan from "morgan";
 import sass from "node-sass";
+
+import path from "path";
+
+import route from "./routes/index.route.js";
 
 const app = express();
 
@@ -12,7 +14,7 @@ const port = 3000;
 const __dirname = path.join(path.resolve(), 'src/');
 const appFolder = {
   resources: path.join(__dirname, '/resources'),
-  public: __dirname + '/public'
+  public: path.join(__dirname, '/public')
 };
 
 // Set Folder Static
@@ -31,23 +33,7 @@ app.set('view engine', 'hbs');
 app.set('views', path.join(appFolder.resources, '/views'));
 
 // HTTP Protocol
-app.get('/', (req, res) => {
-  res.render('home');
-});
-
-app.get('/news', (req, res) => {
-  if (req.query) {
-    console.log(req.query?.txtSearch);
-  }
-  res.render('news');
-});
-
-app.get('/search', (req, res) => {
-  res.render('search');
-});
-app.post('/search', (req, res) => {
-  res.send(req.body);
-});
+route(app);
 
 app.listen(port, () => {
   console.log(`App listening at http://${host}:${port}`);
