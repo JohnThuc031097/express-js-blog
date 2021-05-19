@@ -6,7 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "npm run scss-build && npm run start",
-    "prepare": "husky install",
+    "husky-install": "husky install",
+    "husky-add": "husky add .husky/pre-commit 'lint-staged'",
     "start": "nodemon --inspect ./src/server.js",
     "scss-watch": "node-sass -w src/resources/scss/ -o src/public/css/",
     "scss-build": "node-sass src/resources/scss src/public/css/app.css"
