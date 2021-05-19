@@ -22,11 +22,7 @@ app.use(express.static(appFolder.public));
 // HTTP logger
 app.use(morgan("dev"));
 // Midleware
-app.use(
-    express.urlencoded({
-        extended: true,
-    }),
-);
+app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 // Template Handlebars
