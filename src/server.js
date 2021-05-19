@@ -20,9 +20,9 @@ const appFolder = {
 // Set Folder Static
 app.use(express.static(appFolder.public));
 // HTTP logger
-app.use(morgan('dev'));
+  app.use(morgan('dev'));
 // Midleware
-app.use(express.urlencoded({
+  app.use(express.urlencoded({
   extended: true
 }));
 app.use(express.json());
