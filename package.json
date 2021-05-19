@@ -8,11 +8,13 @@
     "build": "npm run scss-build && npm run start",
     "husky-install": "husky install",
     "husky-uninstall": "husky uninstall",
-    "husky-add": "husky add .husky/pre-commit 'npm run lint-staged'",
-    "lint-staged": "prettier --tab-width 4 --trailing-comma all --write 'src/**/*.{js,json,scss}'",
+    "husky-add": "husky add .husky/pre-commit npx lint-staged",
     "start": "nodemon --inspect ./src/server.js",
     "scss-watch": "node-sass -w src/resources/scss/ -o src/public/css/",
     "scss-build": "node-sass src/resources/scss src/public/css/app.css"
+  },
+  "lint-staged": {
+    "./src/**/*.{js,json,scss}": "prettier --tab-width 4 --trailing-comma all --write"
   },
   "type": "module",
   "repository": {
