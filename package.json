@@ -14,7 +14,7 @@
     "scss-build": "node-sass src/resources/scss src/public/css/app.css"
   },
   "lint-staged": {
-    "./src/**/*.{js,json,scss}": "prettier --tab-width 4 --trailing-comma all --write"
+    "./src/**/*.{js,json,scss}": "prettier --check --tab-width 4 --trailing-comma all --write"
   },
   "type": "module",
   "repository": {
