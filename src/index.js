@@ -15,10 +15,10 @@ const app = express();
 const host = "localhost";
 const port = 3000;
 
-const __dirname = path.join(path.resolve(), "src/");
+const __dirname = path.join(path.resolve(), "src");
 const appFolder = {
-    resources: path.join(__dirname, "/resources"),
-    public: path.join(__dirname, "/public"),
+    resources: path.join(__dirname, "resources"),
+    public: path.join(__dirname, "public"),
 };
 
 // Set Folder Static
@@ -32,7 +32,7 @@ app.use(express.json());
 // Template Handlebars
 app.engine("hbs", handlebars({ extname: ".hbs" }));
 app.set("view engine", "hbs");
-app.set("views", path.join(appFolder.resources, "/views"));
+app.set("views", path.join(appFolder.resources, "views"));
 
 // HTTP Protocol
 route(app);

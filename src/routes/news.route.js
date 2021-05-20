@@ -1,10 +1,9 @@
-import NewController from "../app/controllers/NewsController.js";
+import NewController from "../app/controllers/news.controller.js";
 import express from "express";
 
-const route = express.Router();
+const RouteNews = express.Router();
 
-route.use('/:slug', NewController['show']);
-route.use('/', NewController['index']);
+RouteNews.get("/:slug", NewController["show"]);
+RouteNews.get("/", NewController["index"]);
 
-export default route;
-
+export default RouteNews;

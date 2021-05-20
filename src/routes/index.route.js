@@ -1,11 +1,10 @@
-import siteRoute from "./site.route.js";
-import newsRoute from "./news.route.js";
+import SiteRoute from "./site.route.js";
+import NewsRoute from "./news.route.js";
 
-const route = (app) => {
+const IndexRoute = (app) => {
+    app.use("/news", NewsRoute);
 
-  app.use('/news', newsRoute);
+    app.use("/", SiteRoute);
+};
 
-  app.use('/', siteRoute);
-}
-
-export default route;
+export default IndexRoute;
