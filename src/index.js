@@ -6,11 +6,15 @@ import sass from "node-sass";
 import path from "path";
 
 import route from "./routes/index.route.js";
+import db from "./config/db/index.js";
+
+// Connect to DB
+db.connect("blog_dev");
 
 const app = express();
-
 const host = "localhost";
 const port = 3000;
+
 const __dirname = path.join(path.resolve(), "src/");
 const appFolder = {
     resources: path.join(__dirname, "/resources"),
