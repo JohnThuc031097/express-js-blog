@@ -107,6 +107,10 @@
         flex: 0 0 calc(var(--col-xl) * 5);
         max-width: calc(var(--col-xl) * 5);
     }
+    .grid .row .col.xl-6 {
+        flex: 0 0 calc(var(--col-xl) * 6);
+        max-width: calc(var(--col-xl) * 6);
+    }
     .grid .row .col.xl-7 {
         flex: 0 0 calc(var(--col-xl) * 7);
         max-width: calc(var(--col-xl) * 7);

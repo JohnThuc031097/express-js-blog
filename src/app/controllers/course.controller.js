@@ -16,6 +16,16 @@ const CourseController = {
             })
             .catch(next);
     },
+    // [GET] /course/create
+    create(req, res, next) {
+        res.render("courses/create");
+    },
+    // [POST] /course/store/add
+    storeAdd(req, res, next) {
+        const course = new CourseModel(req.body);
+        course.save().then(res.render("home")).catch(next);
+        // res.json(req.body);
+    },
 };
 
 export default CourseController;
