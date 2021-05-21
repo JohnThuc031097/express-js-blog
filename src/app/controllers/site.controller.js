@@ -1,4 +1,4 @@
-import { DoctumentsToObjects } from "../../util/mongoose.js";
+import { doctumentsToObjects } from "../../util/mongoose.js";
 import CourseModel from "../models/course.model.js";
 
 const SiteController = {
@@ -6,7 +6,7 @@ const SiteController = {
     index(req, res, next) {
         CourseModel.find({})
             .then((courses) =>
-                res.render("home", { courses: DoctumentsToObjects(courses) }),
+                res.render("home", { courses: doctumentsToObjects(courses) }),
             )
             .catch(next);
     },

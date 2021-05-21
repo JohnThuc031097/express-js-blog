@@ -1,9 +1,9 @@
-const DoctumentsToObjects = (documents) => {
+const doctumentsToObjects = (documents) => {
     return documents.map((document) => document.toObject());
 };
 
-const DoctumentToObject = (document) => {
+const doctumentToObject = (document) => {
     return document.toObject();
 };
 
-export { DoctumentsToObjects, DoctumentToObject };
+export { doctumentsToObjects, doctumentToObject };

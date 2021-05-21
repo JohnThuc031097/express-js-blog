@@ -212,6 +212,10 @@
         flex: 0 0 calc(var(--col-md) * 6);
         max-width: calc(var(--col-md) * 6);
     }
+    .grid .row .col.md-7 {
+        flex: 0 0 calc(var(--col-md) * 7);
+        max-width: calc(var(--col-md) * 7);
+    }
     .grid .row .col.md-max {
         flex: 0 0 calc(var(--col-md) * 8);
         max-width: calc(var(--col-md) * 8);

@@ -1,0 +1,44 @@
+{{#with course}}
+{{! PC }}
+<div class="col xl-7 md-hide mb-hide xl-o-top container__course--left">
+  <div class="row xl-o-left">
+    <div class="col xl-max container__course-name">{{name}}</div>
+  </div>
+  <div class="row xl-o-left">
+    <div class="col xl-max container__course-description">{{description}}</div>
+  </div>
+</div>
+<div class="col xl-3 md-hide mb-hide xl-o-top container__course--right">
+  <div class="row">
+    <iframe width="774" height="435" src="https://www.youtube.com/embed/{{mediaId}}" title="YouTube video player"
+      frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+      class="col xl-max container__course-image"
+      allowfullscreen>
+    </iframe>
+  </div>
+  <div class="row">
+    <div class="col xl-max btn text-link container__course-learn">Học tiếp</div>
+  </div>
+</div>
+
+{{! Tablet }}
+<div class="col xl-hide md-6 mb-hide container__course">
+  <div class="row">
+    <iframe width="774" height="435" src="https://www.youtube.com/embed/{{mediaId}}" title="YouTube video player"
+      frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+      class="col xl-max container__course-image" allowfullscreen>
+    </iframe>
+  </div>
+  <div class="row">
+    </div>
+  <div class="row">
+    <div class="col md-max container__course-name">{{name}}</div>
+  </div>
+  <div class="row">
+    <div class="col md-max container__course-description">{{description}}</div>
+  </div>
+  <div class="row">
+    <a class="col md-max btn text-link container__course-learn">Học tiếp</a>
+  </div>
+</div>
+{{/with}}

@@ -33,6 +33,7 @@ app.use(express.json());
 app.engine("hbs", handlebars({ extname: ".hbs" }));
 app.set("view engine", "hbs");
 app.set("views", path.join(appFolder.resources, "views"));
+app.set("view options", { dirname: __dirname });
 
 // HTTP Protocol
 route(app);

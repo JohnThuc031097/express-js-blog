@@ -6,15 +6,15 @@
     border-radius: 3px;
     cursor: pointer;
 }
-.container__courses-item:hover {
-    opacity: 0.6;
-}
 .container__courses-item-image {
     width: 100%;
     height: 200px;
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
+}
+.container__courses-item-image:hover {
+    opacity: 0.6;
 }
 .container__courses-item-name {
     display: block;
@@ -35,9 +35,22 @@
     overflow: hidden;
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 3;
-    height: 66px;
+    height: 64px;
     font-family: Arial, Helvetica, sans-serif;
     font-size: 16px;
     line-height: 1.3;
     margin: 5px 0;
+}
+.container__courses-item-detail {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 5px;
+}
+.container__courses-detail-learn {
+    background-color: rgb(230, 69, 48);
+    color: #fff;
+    font-size: 20px;
+    font-weight: 500;
+    line-height: 1.8;
+    border-radius: 5px;
 }
