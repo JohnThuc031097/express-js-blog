@@ -5,6 +5,6 @@ const CourseRoute = express.Router();
 
 CourseRoute.post("/store/add", CourseController["storeAdd"]);
 CourseRoute.get("/create", CourseController["create"]);
-CourseRoute.get("/:slug", CourseController["show"]);
+CourseRoute.get("/:keyword", CourseController["show"]);
 
 export default CourseRoute;

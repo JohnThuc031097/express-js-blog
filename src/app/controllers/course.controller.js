@@ -1,5 +1,5 @@
 import { doctumentToObject } from "../../util/mongoose.js";
-import CourseModel from "../models/course.model.js";
+import { CourseModel } from "../models/course.model.js";
 
 const CourseController = {
     // [GET] /
@@ -8,7 +8,7 @@ const CourseController = {
     },
     // [GET] /courses/:slug
     show(req, res, next) {
-        CourseModel.findOne({ slug: req.params.slug })
+        CourseModel.findOne({ keyword: req.params?.keyword })
             .then((course) => {
                 res.render("courses/show", {
                     course: doctumentToObject(course),

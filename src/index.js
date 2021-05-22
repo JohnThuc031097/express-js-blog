@@ -1,15 +1,20 @@
+// System
+import path from "path";
+// Framework
 import express from "express";
 import handlebars from "express-handlebars";
 import morgan from "morgan";
 import sass from "node-sass";
-
-import path from "path";
-
+// Route
 import route from "./routes/index.route.js";
 import db from "./config/db/index.js";
+//Model
+import InitModel from "./app/models/init.model.js";
+
 
 // Connect to DB
-db.connect("blog_dev");
+
+db.connect("blog_dev") && InitModel();
 
 const app = express();
 const host = "localhost";

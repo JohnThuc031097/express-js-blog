@@ -1,10 +1,10 @@
 <ul class="row xl-wrap md-wrap container__courses">
   {{#each courses}}
   <li class="col xl-2_5 md-3_5 container__courses-item">
-    <a href="/courses/{{this.slug}}">
+    <a href="/courses/{{this.keyword}}">
       <div class="container__courses-item-image" style="background-image: url('https://img.youtube.com/vi/{{this.mediaId}}/sddefault.jpg')" alt="{{this.name}}"></div>
     </a>
-    <a href="/courses/{{this.slug}}" class="text-link">
+    <a href="/courses/{{this.keyword}}" class="text-link">
       <div class="container__courses-item-name">{{this.name}}</div>
     </a>
     <div class="container__courses-item-description">{{this.description}}</div>

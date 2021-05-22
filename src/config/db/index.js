@@ -9,9 +9,11 @@ const connect = async (nameDb) => {
             useCreateIndex: true,
         });
         console.log("Connect OK");
+        return true;
     } catch (error) {
         console.log("Connect:", error);
     }
+    return false;
 };
 
 export default {
