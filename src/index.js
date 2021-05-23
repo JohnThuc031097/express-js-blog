@@ -5,16 +5,16 @@ import express from "express";
 import handlebars from "express-handlebars";
 import morgan from "morgan";
 import sass from "node-sass";
+// Database
+import db from "./config/db/index.js";
 // Route
 import route from "./routes/index.route.js";
-import db from "./config/db/index.js";
-//Model
-import InitModel from "./app/models/init.model.js";
 
 
 // Connect to DB
-
-db.connect("blog_dev") && InitModel();
+if (db.connect("blog_dev")) {
+    // db.init();
+}
 
 const app = express();
 const host = "localhost";

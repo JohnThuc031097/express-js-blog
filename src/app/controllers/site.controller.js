@@ -6,7 +6,6 @@ const SiteController = {
     index(req, res, next) {
         CourseModel.find({})
             .then((courses) => {
-                console.log(doctumentsToObjects(courses));
                 res.render("home", { courses: doctumentsToObjects(courses) })
             })
             .catch(next);

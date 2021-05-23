@@ -1,70 +1,41 @@
 
-{{! PC }}
-<div class="col xl-5 md-hide mb-hide container__course-create">
+<div class="col xl-6 md-6 mb-hide container__course-create">
   <div class="row">
-    <div class="col xl-max container__course-create-title">Đăng khóa học tại F8</div>
+    <div class="col xl-max md-max container__course-create-title">Đăng khóa học tại F8</div>
   </div>
-  <form class="row xl-wrap xl-o-left" method="POST" action="/courses/store/add">
-    <label for="slug" class="col xl-max container__course-create-label">Từ khóa</label>
-    <input class="col xl-max container__course-create-input" name="slug" type="text" placeholder="Nhập tên từ khóa" />
-    <label for="mediaId" class="col xl-max container__course-create-label">Media ID</label>
-    <input class="col xl-max container__course-create-input" name="mediaId" type="text" placeholder="Nhập từ khóa" />
-    <label for="level" class="col xl-max container__course-create-label">Trình độ</label>
-    <input class="col xl-max container__course-create-input" name="level" type="text" placeholder="Nhập trình độ" />
-    <label for="name" class="col xl-max container__course-create-label">Tên khóa học</label>
-    <input class="col xl-max container__course-create-input" name="name" type="text" placeholder="Nhập tên khóa học" />
-    <label for="description" class="col xl-max container__course-create-label">Mô tả khóa học</label>
-    <textarea class="col xl-max container__course-create-input" name="description" type="text" rows="5"
-      placeholder="Nhập mô tả"></textarea>
-    <input class="col xl-max btn container__course-create-submit" name="btnCreate" type="submit"
-      value="Thêm khóa học" />
-  </form>
-</div>
-
-{{! Tablet }}
-<div class="col xl-hide md-6 mb-hide container__course-create">
-  <div class="row">
-    <div class="col md-max container__course-create-title">Đăng khóa học tại F8</div>
-  </div>
-  <form class="row md-wrap" method="POST" action="/courses/store/add">
-    <label for="slug" class="col md-max container__course-create-label">Từ khóa</label>
+  <form class="row xl-warp md-wrap" method="POST" action="/courses/store/add">
+    <label for="mediaId" class="col xl-max md-max container__course-create-label">Media ID</label>
     <input 
-      class="col md-max container__course-create-input" 
-      name="slug" 
-      type="text" 
-      placeholder="Nhập tên từ khóa" 
-    />
-    <label for="mediaId" class="col md-max container__course-create-label">Media ID</label>
-    <input 
-      class="col md-max container__course-create-input" 
+      class="col xl-max md-max container__course-create-input" 
       name="mediaId" 
       type="text" 
-      placeholder="Nhập từ khóa" 
+      placeholder="Nhập mã media" 
     />
-    <label for="level" class="col md-max container__course-create-label">Trình độ</label>
+    <label for="level" class="col xl-max md-max container__course-create-label">Trình độ</label>
+    <select 
+      class="col xl-max md-max container__course-create-select" 
+      name="level">
+    {{#each level}}
+      <option value="{{this.type}}">{{this.name}}</option>
+    {{/each}}
+    </select>
+    <label for="name" class="col xl-max md-max container__course-create-label">Tên khóa học</label>
     <input 
-      class="col md-max container__course-create-input" 
-      name="level" 
-      type="text" 
-      placeholder="Nhập trình độ"
-    />
-    <label for="name" class="col md-max container__course-create-label">Tên khóa học</label>
-    <input 
-      class="col md-max container__course-create-input"
+      class="col xl-max md-max container__course-create-input"
       name="name"
       type="text" 
       placeholder="Nhập tên khóa học"
     />
-    <label for="description" class="col md-max container__course-create-label">Mô tả khóa học</label>
+    <label for="description" class="col xl-max md-max container__course-create-label">Mô tả khóa học</label>
     <textarea 
-      class="col md-max container__course-create-input" 
+      class="col xl-max md-max container__course-create-input" 
       name="description"
       type="text" 
       rows="5"
       placeholder="Nhập mô tả"
     ></textarea>
     <input 
-      class="col md-max btn container__course-create-submit" 
+      class="col xl-max md-max btn container__course-create-submit" 
       name="btnCreate" 
       type="submit"
       value="Thêm khóa học"

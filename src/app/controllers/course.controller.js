@@ -1,14 +1,15 @@
-import { doctumentToObject } from "../../util/mongoose.js";
-import { CourseModel } from "../models/course.model.js";
+import { doctumentsToObjects, doctumentToObject } from "../../util/mongoose.js";
+import { CourseModel, CourseLevelModel } from "../models/course.model.js";
+import { AuthorModel } from "../models/author.model.js";
 
 const CourseController = {
     // [GET] /
     index(req, res, next) {
-        res.render("home");
+        res.render("courses/index");
     },
     // [GET] /courses/:slug
     show(req, res, next) {
-        CourseModel.findOne({ keyword: req.params?.keyword })
+        CourseModel.findOne({ keyword: req.params?.slug })
             .then((course) => {
                 res.render("courses/show", {
                     course: doctumentToObject(course),
@@ -18,13 +19,24 @@ const CourseController = {
     },
     // [GET] /course/create
     create(req, res, next) {
-        res.render("courses/create");
+        CourseLevelModel.find({})
+            .then(level => {
+                res.render("courses/create", { level: doctumentsToObjects(level) });
+            })
+            .catch(next);
     },
     // [POST] /course/store/add
-    storeAdd(req, res, next) {
+    async storeAdd(req, res, next) {
+        await AuthorModel.findOne({ username: 'johnthuc1997' })
+            .then((model) => {
+                req.body['author'] = doctumentToObject(model);
+            }).catch(next);
+        await CourseLevelModel.findOne({ type: req.body?.level })
+            .then((model) => {
+                req.body['level'] = doctumentToObject(model);
+            }).catch(next);
         const course = new CourseModel(req.body);
-        course.save().then(res.render("home")).catch(next);
-        // res.json(req.body);
+        await course.save().then(res.redirect('/')).catch(next);
     },
 };
 
