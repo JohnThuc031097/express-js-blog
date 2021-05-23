@@ -46,11 +46,16 @@
     justify-content: space-between;
     margin-bottom: 5px;
 }
-.container__courses-detail-learn {
+.container__courses-detail-learn,
+.container__courses-detail-edit,
+.container__courses-detail-delete {
     background-color: rgb(230, 69, 48);
     color: #fff;
     font-size: 20px;
     font-weight: 500;
     line-height: 1.8;
     border-radius: 5px;
+}
+.container__courses-detail-edit {
+    background-color: rgb(43, 43, 206);
 }

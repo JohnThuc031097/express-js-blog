@@ -1,11 +1,11 @@
 import { CourseModel } from "../app/models/course.model.js";
 
-const doctumentsToObjects = (documents) => {
-    return documents.map((document) => document.toObject());
+const doctumentsToObjects = (docs) => {
+    return docs.map((doc) => doc.toObject());
 };
 
-const doctumentToObject = (document) => {
-    return document.toObject();
+const doctumentToObject = (doc) => {
+    return doc.toObject();
 };
 
 const getCodeAuthorUnique = (min, max) => {
@@ -13,13 +13,11 @@ const getCodeAuthorUnique = (min, max) => {
     let code = 0;
     while (isEqual) {
         code = Math.floor(Math.random() * (max - min + 1) + min);
-        CourseModel.findOne({ code }).then((isEqual = true)).catch((isEqual = false));
+        CourseModel.findOne({ code })
+            .then((isEqual = true))
+            .catch((isEqual = false));
     }
     return code;
-}
-
-export {
-    getCodeAuthorUnique,
-    doctumentsToObjects,
-    doctumentToObject,
 };
+
+export { getCodeAuthorUnique, doctumentsToObjects, doctumentToObject };

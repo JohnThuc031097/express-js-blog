@@ -1,22 +1,30 @@
-
+{{#with course as | course |}}
 <div class="col xl-6 md-6 mb-hide container__course-create">
   <div class="row">
-    <div class="col xl-max md-max container__course-create-title">Đăng khóa học tại F8</div>
+    <div class="col xl-max md-max container__course-create-title">Sửa khóa học tại F8</div>
   </div>
-  <form class="row xl-warp md-wrap" method="POST" action="/courses/store/add">
+  <form class="row xl-warp md-wrap" method="POST" action="/user/{{../code}}/courses/api/update/{{slug}}">
     <label for="mediaId" class="col xl-max md-max container__course-create-label">Media ID</label>
     <input 
       class="col xl-max md-max container__course-create-input" 
       name="mediaId" 
       type="text" 
-      placeholder="Nhập mã media" 
+      placeholder="Nhập mã media"
+      value="{{course.mediaId}}"
     />
     <label for="level" class="col xl-max md-max container__course-create-label">Trình độ</label>
     <select 
       class="col xl-max md-max container__course-create-select" 
-      name="level">
-    {{#each level}}
-      <option value="{{this.type}}">{{this.name}}</option>
+      name="level"
+    >
+    {{#each ../levels}}
+      <option value="{{this.type}}"
+        {{#compare course.level '===' this.type }}
+          selected
+        {{/compare}}
+      >
+        {{this.name}}
+      </option>
     {{/each}}
     </select>
     <label for="name" class="col xl-max md-max container__course-create-label">Tên khóa học</label>
@@ -25,6 +33,7 @@
       name="name"
       type="text" 
       placeholder="Nhập tên khóa học"
+      value="{{course.name}}"
     />
     <label for="description" class="col xl-max md-max container__course-create-label">Mô tả khóa học</label>
     <textarea 
@@ -33,12 +42,13 @@
       type="text" 
       rows="5"
       placeholder="Nhập mô tả"
-    ></textarea>
+    >{{course.description}}</textarea>
     <input 
       class="col xl-max md-max btn container__course-create-submit" 
-      name="btnCreate" 
+      name="btnSubmit" 
       type="submit"
-      value="Thêm khóa học"
+      value="Cập nhật khóa học"
     />
   </form>
 </div>
+{{/with}}

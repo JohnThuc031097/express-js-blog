@@ -2,18 +2,18 @@ import mongoose from "mongoose";
 
 const Schema = mongoose.Schema;
 
-const authorSchema = new Schema({
-  code: { type: Number },
-  firstName: { type: String, maxLength: 50 },
-  lastName: { type: String, maxLength: 50 },
-  username: { type: String, maxLength: 20 },
-  password: { type: String, maxLength: 20 },
-  coin: { type: Number },
-}, { timestamps: true, });
+const authorSchema = new Schema(
+    {
+        code: { type: Number },
+        firstName: { type: String, maxLength: 50 },
+        lastName: { type: String, maxLength: 50 },
+        username: { type: String, maxLength: 20 },
+        password: { type: String, maxLength: 20 },
+        coin: { type: Number },
+    },
+    { timestamps: true },
+);
 
-const AuthorModel = mongoose.model("authors", authorSchema);
+const AuthorModel = mongoose.model("author", authorSchema);
 
-export {
-  AuthorModel,
-}
-
+export { AuthorModel };

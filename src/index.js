@@ -9,7 +9,8 @@ import sass from "node-sass";
 import db from "./config/db/index.js";
 // Route
 import route from "./routes/index.route.js";
-
+// Util
+import handlebarsRegisterHelper from "./util/handlbars.js";
 
 // Connect to DB
 if (db.connect("blog_dev")) {
@@ -35,11 +36,18 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 // Template Handlebars
-app.engine("hbs", handlebars({ extname: ".hbs" }));
+app.engine(
+    "hbs",
+    handlebars({
+        extname: ".hbs",
+    }),
+);
 app.set("view engine", "hbs");
 app.set("views", path.join(appFolder.resources, "views"));
 app.set("view options", { dirname: __dirname });
 
+// Register Helper Handlebars
+handlebarsRegisterHelper();
 // HTTP Protocol
 route(app);
 
