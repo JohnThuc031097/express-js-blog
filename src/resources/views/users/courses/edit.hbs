@@ -19,7 +19,7 @@
     >
     {{#each ../levels}}
       <option value="{{this.type}}"
-        {{#compare course.level '===' this.type }}
+        {{#compare course.level this.type }}
           selected
         {{/compare}}
       >
