@@ -83,6 +83,10 @@
     .grid .row .col.xl-hide {
         display: none;
     }
+    .grid .row .col.xl-0_5 {
+        flex: 0 0 calc(var(--col-xl) * 0.5);
+        max-width: calc(var(--col-xl) * 0.5);
+    }
     .grid .row .col.xl-2 {
         flex: 0 0 calc(var(--col-xl) * 2);
         max-width: calc(var(--col-xl) * 2);
@@ -192,9 +196,17 @@
     .grid .row .col.md-hide {
         display: none;
     }
+    .grid .row .col.md-1_5 {
+        flex: 0 0 calc(var(--col-md) * 1.5);
+        max-width: calc(var(--col-md) * 1.5);
+    }
     .grid .row .col.md-2 {
         flex: 0 0 calc(var(--col-md) * 2);
         max-width: calc(var(--col-md) * 2);
+    }
+    .grid .row .col.md-2_5 {
+        flex: 0 0 calc(var(--col-md) * 2.5);
+        max-width: calc(var(--col-md) * 2.5);
     }
     .grid .row .col.md-2_6 {
         flex: 0 0 calc(var(--col-md) * 2.66667);

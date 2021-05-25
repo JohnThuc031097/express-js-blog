@@ -62,12 +62,12 @@ body {
     color: #000;
     text-decoration: none !important;
 }
-.text-overhidden {
-    display: block !important;
-    display: -webkit-box !important;
+@mixin textShort($rowCount: 2) {
+    display: block;
+    display: -webkit-box;
     overflow: hidden;
     -webkit-box-orient: vertical;
-    -webkit-line-clamp: 2;
+    -webkit-line-clamp: $rowCount;
 }
 
 /* Animation */

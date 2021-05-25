@@ -8,7 +8,7 @@
     "husky-install": "husky install",
     "husky-uninstall": "husky uninstall",
     "husky-add": "npx husky add .husky/pre-commit 'npx lint-staged'",
-    "start": "nodemon --inspect ./src/index.js",
+    "start": "nodemon --inspect ./src/index.js -e scss,js",
     "scss-watch": "node-sass --output-style compressed -w src/resources/scss/ -o src/public/css/",
     "scss-build": "node-sass src/resources/scss src/public/css/app.css"
   },

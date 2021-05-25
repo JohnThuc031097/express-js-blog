@@ -9,7 +9,7 @@ import db from './config/db/index.js';
 // Route
 import route from './routes/index.route.js';
 // Util
-import { sum, compare, formatDate } from './util/handlbars.js';
+import { sum, isEven, compare, formatDate } from './util/handlbars.js';
 import { sassRender } from './util/sass.js';
 
 // Variables
@@ -21,7 +21,7 @@ const appFolder = {
 
 // Connect to DB
 if (await db.connect('education_dev')) {
-    //db.init();
+    // db.init();
     // Render SCSS
     const isSassRender = sassRender(
         path.join(__dirname, 'resources/scss/app.scss'),
@@ -48,6 +48,7 @@ if (await db.connect('education_dev')) {
                 extname: '.hbs',
                 helpers: {
                     sum,
+                    isEven,
                     compare,
                     formatDate,
                 },

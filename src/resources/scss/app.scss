@@ -1,9 +1,13 @@
-@import "variable";
-@import "base";
-@import "grid";
+@import 'variable';
+@import 'base';
+@import 'grid';
 
-@import "search";
+@import 'search';
 
-@import "courses/index";
-@import "courses/create";
-@import "courses/detail";
+// People
+@import 'courses/index';
+@import 'courses/create';
+@import 'courses/detail';
+
+// User
+@import 'users/courses/index';

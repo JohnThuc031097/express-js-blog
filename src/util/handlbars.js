@@ -4,6 +4,10 @@ const sum = function (a, b) {
     return a + b;
 };
 
+const isEven = function (num) {
+    return num % 2 == 0;
+};
+
 const compare = function (lvalue, operator, rvalue, options) {
     var operators, result;
 
@@ -67,4 +71,4 @@ const formatDate = function (timestamp) {
     return moment(timestamp).format('DD-MM-yyyy hh:mm:ss');
 };
 
-export { sum, compare, formatDate };
+export { sum, isEven, compare, formatDate };
