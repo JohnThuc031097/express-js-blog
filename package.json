@@ -5,7 +5,6 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "npm run scss-build && npm run start",
     "husky-install": "husky install",
     "husky-uninstall": "husky uninstall",
     "husky-add": "husky add .husky/pre-commit npx lint-staged",
@@ -14,7 +13,7 @@
     "scss-build": "node-sass src/resources/scss src/public/css/app.css"
   },
   "lint-staged": {
-    "./src/**/*.{js,json,scss}": "prettier --check --tab-width 4 --trailing-comma all --write"
+    "./src/**/*.{js,json,scss}": "prettier --check --tab-width 4 --single-quote --trailing-comma all --write"
   },
   "type": "module",
   "repository": {

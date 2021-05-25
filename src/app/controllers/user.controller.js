@@ -13,11 +13,13 @@ const UserController = {
             })
             .catch(next);
         await CourseModel.find({ author: user })
-            .populate("author")
+            .populate('author')
+            .populate('level')
             .then((docs) => {
                 courses = doctumentsToObjects(docs);
             })
             .catch(next);
+        console.log(courses);
         res.render("users/courses/index", { courses });
     },
     // [GET] /:id/courses/page/detail/:slug

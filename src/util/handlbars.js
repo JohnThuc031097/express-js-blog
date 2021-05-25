@@ -1,3 +1,8 @@
+
+const sum = function (a, b) {
+    return a + b;
+};
+
 const compare = function (lvalue, operator, rvalue, options) {
     var operators, result;
 
@@ -44,7 +49,7 @@ const compare = function (lvalue, operator, rvalue, options) {
     if (!operators[operator]) {
         throw new Error(
             "Handlerbars Helper 'compare' doesn't know the operator " +
-                operator,
+            operator,
         );
     }
 
@@ -57,4 +62,4 @@ const compare = function (lvalue, operator, rvalue, options) {
     }
 };
 
-export { compare };
+export { sum, compare };

@@ -1,23 +1,19 @@
-<ul class="row xl-wrap md-wrap container__courses">
-  {{#each courses}}
-  <li class="col xl-2_5 md-3_5 container__courses-item">
-    <a href="/user/{{this.author.code}}/courses/page/detail/{{this.slug}}">
-      <div class="container__courses-item-image" style="background-image: url('https://img.youtube.com/vi/{{this.mediaId}}/sddefault.jpg')" alt="{{this.name}}"></div>
-    </a>
-    <a href="/user/{{this.author.code}}/courses/page/detail/{{this.slug}}" class="text-link">
-      <div class="container__courses-item-name">{{this.name}}</div>
-    </a>
-    <div class="container__courses-item-description">{{this.description}}</div>
-    <div class="container__courses-item-detail">
-      <a 
-        class="container__courses-detail-edit btn text-link"
-        href="/user/{{this.author.code}}/courses/page/edit/{{this.slug}}"
-      >Edit</a>
-      <a 
-        class="container__courses-detail-delete btn text-link"
-        href="/user/{{this.author.code}}/courses/api/delete/{{this.slug}}"
-      >Delete</a>
+<div class="container__courses-user">
+    <div class="row container__courses-user-caption">{{caption}}</div>
+    <div class="row container__courses-user-heading">
+        <span class="col xl md-0_5 container__courses-user-heading-item">#</span>
+        <span class="col xl-2 md-2 container__courses-user-heading-item">Name</span>
+        <span class="col xl-2 md-2 container__courses-user-heading-item">Description</span>
+        <span class="col xl md container__courses-user-heading-item">Level</span>
+        <span class="col xl md container__courses-user-heading-item">Created At</span>
     </div>
-  </li>
-  {{/each}}
-</ul>
+    {{#each courses}}
+    <div class="row container__courses-user-table">
+        <div class="col xl md-0_5 container__courses-user-table-item">{{sum @index 1}}</div>
+        <div class="col xl-2 md-2 container__courses-user-table-item">{{this.name}}</div>
+        <div class="col xl-2 md-2 container__courses-user-table-item">{{this.description}}</div>
+        <div class="col xl md container__courses-user-table-item">{{this.level.name}}</div>
+        <div class="col xl md container__courses-user-table-item">{{this.createdAt}}</div>
+    </div>
+    {{/each}}
+</div>

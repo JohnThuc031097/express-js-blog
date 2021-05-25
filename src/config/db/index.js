@@ -16,10 +16,10 @@ const connect = async (nameDb) => {
             useFindAndModify: false,
             useCreateIndex: true,
         });
-        console.log("Connect OK");
+        console.log("[MongoDB] -> [Success] Connected!");
         return true;
-    } catch (error) {
-        console.log("Connect:", error);
+    } catch (err) {
+        console.log("[MongoDB] -> [Error] ", err);
     }
     return false;
 };
