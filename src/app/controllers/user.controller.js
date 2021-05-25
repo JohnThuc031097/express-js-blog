@@ -19,7 +19,6 @@ const UserController = {
                 courses = doctumentsToObjects(docs);
             })
             .catch(next);
-        console.log(courses);
         res.render('users/courses/index', { courses });
     },
     // [GET] /:id/courses/page/detail/:slug

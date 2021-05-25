@@ -1,19 +1,23 @@
-<div class="container__courses-user">
-    <div class="row container__courses-user-caption">{{caption}}</div>
+<div class="col xl-max md-max container__courses-user">
+    <div class="row container__courses-user-caption">Các bài đăng khóa học</div>
     <div class="row container__courses-user-heading">
-        <span class="col xl md-0_5 container__courses-user-heading-item">#</span>
+        <span class="col xl md-0_5 text-center container__courses-user-heading-item">#</span>
         <span class="col xl-2 md-2 container__courses-user-heading-item">Name</span>
-        <span class="col xl-2 md-2 container__courses-user-heading-item">Description</span>
-        <span class="col xl md container__courses-user-heading-item">Level</span>
-        <span class="col xl md container__courses-user-heading-item">Created At</span>
+        <span class="col xl-4 md-2 container__courses-user-heading-item">Description</span>
+        <span class="col xl md text-center container__courses-user-heading-item">Level</span>
+        <span class="col xl md text-center container__courses-user-heading-item">Created At</span>
+        <span class="col xl-2 md text-center container__courses-user-heading-item">Controls</span>
     </div>
     {{#each courses}}
     <div class="row container__courses-user-table">
-        <div class="col xl md-0_5 container__courses-user-table-item">{{sum @index 1}}</div>
-        <div class="col xl-2 md-2 container__courses-user-table-item">{{this.name}}</div>
-        <div class="col xl-2 md-2 container__courses-user-table-item">{{this.description}}</div>
-        <div class="col xl md container__courses-user-table-item">{{this.level.name}}</div>
-        <div class="col xl md container__courses-user-table-item">{{this.createdAt}}</div>
+        <div class="col xl md-0_5 text-center container__courses-user-table-item">{{sum @index 1}}</div>
+        <div class="col xl-2 md-2 container__courses-user-table-item-wrap-3">{{this.name}}</div>
+        <div class="col xl-4 md-2 container__courses-user-table-item-wrap-3">{{this.description}}</div>
+        <div class="col xl md text-center container__courses-user-table-item">{{this.level.name}}</div>
+        <div class="col xl md text-center container__courses-user-table-item">{{formatDate this.createdAt}}</div>
+        <div class="col xl-2 md text-center container__courses-user-table-item--controls">
+
+        </div>
     </div>
     {{/each}}
 </div>

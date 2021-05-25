@@ -1,3 +1,4 @@
+import moment from 'moment';
 
 const sum = function (a, b) {
     return a + b;
@@ -13,32 +14,32 @@ const compare = function (lvalue, operator, rvalue, options) {
     if (options === undefined) {
         options = rvalue;
         rvalue = operator;
-        operator = "===";
+        operator = '===';
     }
 
     operators = {
-        "==": function (l, r) {
+        '==': function (l, r) {
             return l == r;
         },
-        "===": function (l, r) {
+        '===': function (l, r) {
             return l === r;
         },
-        "!=": function (l, r) {
+        '!=': function (l, r) {
             return l != r;
         },
-        "!==": function (l, r) {
+        '!==': function (l, r) {
             return l !== r;
         },
-        "<": function (l, r) {
+        '<': function (l, r) {
             return l < r;
         },
-        ">": function (l, r) {
+        '>': function (l, r) {
             return l > r;
         },
-        "<=": function (l, r) {
+        '<=': function (l, r) {
             return l <= r;
         },
-        ">=": function (l, r) {
+        '>=': function (l, r) {
             return l >= r;
         },
         typeof: function (l, r) {
@@ -49,7 +50,7 @@ const compare = function (lvalue, operator, rvalue, options) {
     if (!operators[operator]) {
         throw new Error(
             "Handlerbars Helper 'compare' doesn't know the operator " +
-            operator,
+                operator,
         );
     }
 
@@ -62,4 +63,8 @@ const compare = function (lvalue, operator, rvalue, options) {
     }
 };
 
-export { sum, compare };
+const formatDate = function (timestamp) {
+    return moment(timestamp).format('DD-MM-yyyy hh:mm:ss');
+};
+
+export { sum, compare, formatDate };
