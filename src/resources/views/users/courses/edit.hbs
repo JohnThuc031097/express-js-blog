@@ -3,52 +3,26 @@
   <div class="row">
     <div class="col xl-max md-max container__course-create-title">Sửa khóa học tại F8</div>
   </div>
-  <form class="row xl-warp md-wrap" method="POST" action="/user/{{../code}}/courses/api/update/{{slug}}">
+  <form class="row xl-warp md-wrap" method="POST" action="/user/{{../idUser}}/courses/api/update/{{course._id}}">
     <label for="mediaId" class="col xl-max md-max container__course-create-label">Media ID</label>
-    <input 
-      class="col xl-max md-max container__course-create-input" 
-      name="mediaId" 
-      type="text" 
-      placeholder="Nhập mã media"
-      value="{{course.mediaId}}"
-    />
+    <input class="col xl-max md-max container__course-create-input" name="mediaId" type="text"
+      placeholder="Nhập mã media" value="{{course.mediaId}}" />
     <label for="level" class="col xl-max md-max container__course-create-label">Trình độ</label>
-    <select 
-      class="col xl-max md-max container__course-create-select" 
-      name="level"
-    >
-    {{#each ../levels}}
-      <option value="{{this.type}}"
-        {{#compare course.level this.type }}
-          selected
-        {{/compare}}
-      >
+    <select class="col xl-max md-max container__course-create-select" name="level">
+      {{#each ../levels}}
+      <option value="{{this._id}}" {{#compare course.level 'equals' this._id }} selected {{/compare}}>
         {{this.name}}
       </option>
-    {{/each}}
+      {{/each}}
     </select>
     <label for="name" class="col xl-max md-max container__course-create-label">Tên khóa học</label>
-    <input 
-      class="col xl-max md-max container__course-create-input"
-      name="name"
-      type="text" 
-      placeholder="Nhập tên khóa học"
-      value="{{course.name}}"
-    />
+    <input class="col xl-max md-max container__course-create-input" name="name" type="text"
+      placeholder="Nhập tên khóa học" value="{{course.name}}" />
     <label for="description" class="col xl-max md-max container__course-create-label">Mô tả khóa học</label>
-    <textarea 
-      class="col xl-max md-max container__course-create-input" 
-      name="description"
-      type="text" 
-      rows="5"
-      placeholder="Nhập mô tả"
-    >{{course.description}}</textarea>
-    <input 
-      class="col xl-max md-max btn container__course-create-submit" 
-      name="btnSubmit" 
-      type="submit"
-      value="Cập nhật khóa học"
-    />
+    <textarea class="col xl-max md-max container__course-create-textarea" name="description" type="text" rows="10"
+      placeholder="Nhập mô tả">{{course.description}}</textarea>
+    <input class="col xl-max md-max btn container__course-create-submit" name="btnSubmit" type="submit"
+      value="Cập nhật" />
   </form>
 </div>
 {{/with}}

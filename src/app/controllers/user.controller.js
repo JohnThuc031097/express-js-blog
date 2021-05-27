@@ -3,27 +3,22 @@ import { CourseModel, CourseLevelModel } from '../models/course.model.js';
 import { AuthorModel } from '../models/author.model.js';
 
 const UserController = {
-    // [GET] /:id/course/page
+    // [GET] /:idUser/course/page
     async coursePageIndex(req, res, next) {
-        let user = {};
+        const idUser = req.params?.idUser;
         let courses = [];
-        await AuthorModel.findOne({ code: req.params?.id })
-            .then((doc) => {
-                user = doctumentToObject(doc);
-            })
-            .catch(next);
-        await CourseModel.find({ author: user })
+        await CourseModel.find({ author: idUser })
             .populate('author')
             .populate('level')
             .then((docs) => {
                 courses = doctumentsToObjects(docs);
             })
             .catch(next);
-        res.render('users/courses/index', { courses });
+        res.render('users/courses/index', { idUser, courses });
     },
-    // [GET] /:id/courses/page/detail/:slug
+    // [GET] /:idUser/courses/page/detail/:idCourse
     async coursePageDetail(req, res, next) {
-        await CourseModel.findOne({ slug: req.params?.slug })
+        await CourseModel.findById(req.params?.idCourse)
             .then((course) => {
                 res.render('users/courses/detail', {
                     course: doctumentToObject(course),
@@ -31,31 +26,26 @@ const UserController = {
             })
             .catch(next);
     },
-    // [GET] /:id/courses/page/create
+    // [GET] /:idUser/courses/page/create
     async coursePageCreate(req, res, next) {
         await CourseLevelModel.find({})
             .then((level) => {
                 res.render('users/courses/create', {
-                    code: req.params?.id,
+                    idUser: req.params?.idUser,
                     level: doctumentsToObjects(level),
                 });
             })
             .catch(next);
     },
-    // [GET] /:id/courses/page/edit/:slug
+    // [GET] /:idUser/courses/page/edit/:idCourse
     async coursePageEdit(req, res, next) {
-        let slug = req.params?.slug;
-        let code = req.params?.id;
+        let idCourse = req.params?.idCourse;
+        let idUser = req.params?.idUser;
         let course = {};
         let levels = [];
-        await CourseModel.findOne({ slug })
+        await CourseModel.findById(idCourse)
             .then((doc) => {
                 course = doctumentToObject(doc);
-            })
-            .catch(next);
-        await CourseLevelModel.findOne({ _id: course.level })
-            .then((doc) => {
-                course['level'] = doctumentToObject(doc).type;
             })
             .catch(next);
         await CourseLevelModel.find({})
@@ -63,13 +53,13 @@ const UserController = {
                 levels = doctumentsToObjects(docs);
             })
             .catch(next);
-        res.render('users/courses/edit', { code, slug, levels, course });
+        res.render('users/courses/edit', { idUser, levels, course });
     },
 
-    // [POST] /:id/courses/api/add
+    // [POST] /:idUser/courses/api/add
     async courseAdd(req, res, next) {
-        const userCode = req.params?.id;
-        await AuthorModel.findOne({ code: userCode })
+        const idUser = req.params?.idUser;
+        await AuthorModel.findOne({ code: idUser })
             .then((doc) => {
                 req.body['author'] = doctumentToObject(doc);
             })
@@ -91,29 +81,33 @@ const UserController = {
             })
             .catch(next);
     },
-    // [POST] /:id/courses/api/update/:slug
+    // [POST] /:idUser/courses/api/update/:idCourse
     async courseUpdate(req, res, next) {
-        const code = req.params?.id;
-        const slug = req.params?.slug;
+        const idUser = req.params?.idUser;
+        const idCourse = req.params?.idCourse;
         const course = req?.body;
-        await CourseLevelModel.findOne({ type: course?.level })
+        await CourseLevelModel.findById(course?.level)
             .then((doc) => {
                 course['level'] = doctumentToObject(doc);
             })
             .catch(next);
-        let courseUpdated = await CourseModel.findOneAndUpdate(
-            { slug },
+        let courseUpdated = await CourseModel.findByIdAndUpdate(
+            idCourse,
             course,
             { new: true },
         );
-        res.redirect(`/user/${code}/courses/page/detail/${courseUpdated.slug}`);
+        // res.redirect(`/user/${idUser}/courses/page/detail/${courseUpdated._id}`);
+        res.redirect(`/user/${idUser}/courses/page/`);
     },
-    // [POST] /:id/courses/api/delete/:slug
+    // [POST] /:idUser/courses/api/delete/:idCourse
     async courseDelete(req, res, next) {
-        const code = req.params?.id;
-        const slug = req.params?.slug;
-        await CourseModel.findOneAndRemove({ slug });
-        res.redirect(`/user/${code}/courses/page`);
+        const idUser = req.params?.idUser;
+        const idCourse = req.params?.idCourse;
+        await CourseModel.findByIdAndDelete(idCourse)
+            .then((doc) => {
+                res.redirect(`/user/${idUser}/courses/page`);
+            })
+            .catch(next);
     },
 };
 

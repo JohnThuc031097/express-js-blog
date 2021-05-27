@@ -9,15 +9,18 @@
         <span class="col xl md text-center container__courses-user-heading-item">Controls</span>
     </div>
     {{#each courses}}
-    <div class="row container__courses-user-table{{#if (isEven @index)}}-light{{/if}}">
+    <div class="row text-link container__courses-user-table{{#if (isEven @index)}}-light{{/if}}">
         <div class="col xl-0_5 md-0_5 text-center container__courses-user-table-item">{{sum @index 1}}</div>
-        <div class="col xl-3 md-2 container__courses-user-table-item text-short">{{this.name}}</div>
+        <a href="/user/{{../idUser}}/courses/page/detail/{{this._id}}"
+            class="col xl-3 md-2 text-link container__courses-user-table-item text-short">{{this.name}}</a>
         <div class="col xl-4 md-2 container__courses-user-table-item text-short">{{this.description}}</div>
         <div class="col xl md text-center container__courses-user-table-item">{{this.level.name}}</div>
         <div class="col xl md text-center container__courses-user-table-item">{{formatDate this.createdAt}}</div>
         <div class="col xl md text-center container__courses-user-table-item--controls">
-            <a class="container__courses-user-table-item-child btn text-link" href="">Edit</a>
-            <a class="container__courses-user-table-item-child btn text-link" href="">Remove</a>
+            <a class="container__courses-user-table-item-child btn text-link"
+                href="/user/{{../idUser}}/courses/page/edit/{{this._id}}">Edit</a>
+            <a class="container__courses-user-table-item-child btn text-link"
+                href="/user/{{../idUser}}/courses/api/delete/{{this._id}}">Remove</a>
         </div>
     </div>
     {{/each}}

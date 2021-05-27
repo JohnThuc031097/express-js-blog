@@ -1,19 +1,31 @@
-import express from "express";
-import UserController from "../app/controllers/user.controller.js";
+import express from 'express';
+import UserController from '../app/controllers/user.controller.js';
 
 const UserRoute = express.Router();
 
 // PAGE
-UserRoute.get("/:id/courses/page", UserController["coursePageIndex"]);
-UserRoute.get("/:id/courses/page/create", UserController["coursePageCreate"]);
-UserRoute.get("/:id/courses/page/edit/:slug", UserController["coursePageEdit"]);
+UserRoute.get('/:idUser/courses/page', UserController['coursePageIndex']);
 UserRoute.get(
-    "/:id/courses/page/detail/:slug",
-    UserController["coursePageDetail"],
+    '/:idUser/courses/page/create',
+    UserController['coursePageCreate'],
+);
+UserRoute.get(
+    '/:idUser/courses/page/edit/:idCourse',
+    UserController['coursePageEdit'],
+);
+UserRoute.get(
+    '/:idUser/courses/page/detail/:idCourse',
+    UserController['coursePageDetail'],
 );
 // API
-UserRoute.post("/:id/courses/api/add", UserController["courseAdd"]);
-UserRoute.post("/:id/courses/api/update/:slug", UserController["courseUpdate"]);
-UserRoute.get("/:id/courses/api/delete/:slug", UserController["courseDelete"]);
+UserRoute.post('/:idUser/courses/api/add', UserController['courseAdd']);
+UserRoute.post(
+    '/:idUser/courses/api/update/:idCourse',
+    UserController['courseUpdate'],
+);
+UserRoute.get(
+    '/:idUser/courses/api/delete/:idCourse',
+    UserController['courseDelete'],
+);
 
 export default UserRoute;

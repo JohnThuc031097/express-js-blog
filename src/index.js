@@ -18,9 +18,10 @@ const appFolder = {
     resources: path.join(__dirname, 'resources'),
     public: path.join(__dirname, 'public'),
 };
+const nameCollection = 'education_dev';
 
 // Connect to DB
-if (await db.connect('education_dev')) {
+if (await db.connect(nameCollection)) {
     // db.init();
     // Render SCSS
     const isSassRender = sassRender(

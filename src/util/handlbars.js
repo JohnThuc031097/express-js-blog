@@ -22,6 +22,9 @@ const compare = function (lvalue, operator, rvalue, options) {
     }
 
     operators = {
+        equals: function (l, r) {
+            return l.equals(r);
+        },
         '==': function (l, r) {
             return l == r;
         },
