@@ -61,6 +61,9 @@
     .grid .row.xl-o-space-between {
         justify-content: space-between;
     }
+    .grid .row.xl-o-space-around {
+        justify-content: space-around;
+    }
     /* Col */
     .grid .row .col {
         padding-left: var(--gutter-padding-xl);
@@ -170,6 +173,9 @@
     .grid .row.md-o-space-between {
         justify-content: space-between;
     }
+    .grid .row.md-o-space-around {
+        justify-content: space-around;
+    }
     /* Col */
     .grid .row .col {
         padding-left: var(--gutter-padding-md);
@@ -262,6 +268,9 @@
     }
     .grid .row.mb-o-space-between {
         justify-content: space-between;
+    }
+    .grid .row.md-o-space-around {
+        justify-content: space-around;
     }
     /* Col */
     .grid .row .col {

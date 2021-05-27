@@ -3,7 +3,7 @@ import UserController from '../app/controllers/user.controller.js';
 
 const UserRoute = express.Router();
 
-// PAGE
+// PAGES
 UserRoute.get('/:idUser/courses/page', UserController['coursePageIndex']);
 UserRoute.get(
     '/:idUser/courses/page/create',
@@ -17,14 +17,11 @@ UserRoute.get(
     '/:idUser/courses/page/detail/:idCourse',
     UserController['coursePageDetail'],
 );
-// API
-UserRoute.post('/:idUser/courses/api/add', UserController['courseAdd']);
-UserRoute.post(
-    '/:idUser/courses/api/update/:idCourse',
-    UserController['courseUpdate'],
-);
-UserRoute.get(
-    '/:idUser/courses/api/delete/:idCourse',
+// APIS
+UserRoute.post('/:idUser/courses/api', UserController['courseAdd']);
+UserRoute.put('/:idUser/courses/api/:idCourse', UserController['courseUpdate']);
+UserRoute.delete(
+    '/:idUser/courses/api/:idCourse',
     UserController['courseDelete'],
 );
 

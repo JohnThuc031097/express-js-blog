@@ -3,6 +3,9 @@ import { CourseModel, CourseLevelModel } from '../models/course.model.js';
 import { AuthorModel } from '../models/author.model.js';
 
 const UserController = {
+    /**
+     * PAGES
+     */
     // [GET] /:idUser/course/page
     async coursePageIndex(req, res, next) {
         const idUser = req.params?.idUser;
@@ -29,10 +32,10 @@ const UserController = {
     // [GET] /:idUser/courses/page/create
     async coursePageCreate(req, res, next) {
         await CourseLevelModel.find({})
-            .then((level) => {
+            .then((docs) => {
                 res.render('users/courses/create', {
                     idUser: req.params?.idUser,
-                    level: doctumentsToObjects(level),
+                    levels: doctumentsToObjects(docs),
                 });
             })
             .catch(next);
@@ -56,32 +59,35 @@ const UserController = {
         res.render('users/courses/edit', { idUser, levels, course });
     },
 
-    // [POST] /:idUser/courses/api/add
+    /**
+     * APIS
+     *
+     * Url: /:idUser/courses/api
+     */
+    // [POST]
     async courseAdd(req, res, next) {
         const idUser = req.params?.idUser;
-        await AuthorModel.findOne({ code: idUser })
+        let course = req?.body;
+        await AuthorModel.findById(idUser)
             .then((doc) => {
-                req.body['author'] = doctumentToObject(doc);
+                course['author'] = doctumentToObject(doc);
             })
             .catch(next);
-        await CourseLevelModel.findOne({ type: req.body?.level })
+        await CourseLevelModel.findById(course?.level)
             .then((doc) => {
-                req.body['level'] = doctumentToObject(doc);
+                course['level'] = doctumentToObject(doc);
             })
             .catch(next);
 
-        const course = new CourseModel(req.body);
-        await course
+        await new CourseModel(course)
             .save()
             .then((docSaved) => {
                 docSaved = doctumentToObject(docSaved);
-                res.redirect(
-                    `/user/${userCode}/courses/page/detail/${docSaved?.slug}`,
-                );
+                res.redirect(`/user/${idUser}/courses/page/`);
             })
             .catch(next);
     },
-    // [POST] /:idUser/courses/api/update/:idCourse
+    // [PUT]
     async courseUpdate(req, res, next) {
         const idUser = req.params?.idUser;
         const idCourse = req.params?.idCourse;
@@ -91,20 +97,18 @@ const UserController = {
                 course['level'] = doctumentToObject(doc);
             })
             .catch(next);
-        let courseUpdated = await CourseModel.findByIdAndUpdate(
-            idCourse,
-            course,
-            { new: true },
-        );
-        // res.redirect(`/user/${idUser}/courses/page/detail/${courseUpdated._id}`);
-        res.redirect(`/user/${idUser}/courses/page/`);
+        await CourseModel.findByIdAndUpdate(idCourse, course)
+            .then(() => {
+                res.redirect(`/user/${idUser}/courses/page/`);
+            })
+            .catch(next);
     },
-    // [POST] /:idUser/courses/api/delete/:idCourse
+    // [DELETE]
     async courseDelete(req, res, next) {
         const idUser = req.params?.idUser;
         const idCourse = req.params?.idCourse;
         await CourseModel.findByIdAndDelete(idCourse)
-            .then((doc) => {
+            .then(() => {
                 res.redirect(`/user/${idUser}/courses/page`);
             })
             .catch(next);

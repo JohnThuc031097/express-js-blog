@@ -1,17 +1,25 @@
+/**
+ * Import libs
+ */
 // System
 import path from 'path';
-// Framework
+// Framework SAVE
 import express from 'express';
 import handlebars from 'express-handlebars';
+// Frameworks DEVE
 import morgan from 'morgan';
-// Database
+import methodOverride from 'method-override';
+// Configs
 import db from './config/db/index.js';
-// Route
+// Routes
 import route from './routes/index.route.js';
-// Util
+// Utils
 import { sum, isEven, compare, formatDate } from './util/handlbars.js';
 import { sassRender } from './util/sass.js';
 
+/**
+ * Declaration variabkes
+ */
 // Variables
 const __dirname = path.join(path.resolve(), 'src');
 const appFolder = {
@@ -20,6 +28,9 @@ const appFolder = {
 };
 const nameCollection = 'education_dev';
 
+/**
+ * Code here
+ */
 // Connect to DB
 if (await db.connect(nameCollection)) {
     // db.init();
@@ -41,6 +52,7 @@ if (await db.connect(nameCollection)) {
         // Midleware
         app.use(express.urlencoded({ extended: true }));
         app.use(express.json());
+        app.use(methodOverride('_method'));
 
         // Template Handlebars
         app.engine(

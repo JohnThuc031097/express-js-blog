@@ -3,7 +3,7 @@
   <div class="row">
     <div class="col xl-max md-max container__course-create-title">Sửa khóa học tại F8</div>
   </div>
-  <form class="row xl-warp md-wrap" method="POST" action="/user/{{../idUser}}/courses/api/update/{{course._id}}">
+  <form class="row xl-warp md-wrap" method="POST" action="/user/{{../idUser}}/courses/api/{{course._id}}?_method=PUT">
     <label for="mediaId" class="col xl-max md-max container__course-create-label">Media ID</label>
     <input class="col xl-max md-max container__course-create-input" name="mediaId" type="text"
       placeholder="Nhập mã media" value="{{course.mediaId}}" />
