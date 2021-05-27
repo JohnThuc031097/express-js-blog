@@ -9,7 +9,7 @@ const isEven = function (num) {
 };
 
 const compare = function (lvalue, operator, rvalue, options) {
-    var operators, result;
+    let operators, result;
 
     if (arguments.length < 3) {
         throw new Error("Handlerbars Helper 'compare' needs 2 parameters");

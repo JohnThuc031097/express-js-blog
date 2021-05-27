@@ -19,32 +19,46 @@
         <div class="col xl md text-center container__courses-user-table-item--controls">
             <a class="container__courses-user-table-item-child btn text-link"
                 href="/user/{{../idUser}}/courses/page/edit/{{this._id}}">Edit</a>
-            <a class="container__courses-user-table-item-child btn text-link" onclick="showDialog(true)">Remove</a>
+            <a class="container__courses-user-table-item-child btn text-link" onclick="formDeleteCourse.showDialog([
+                    {
+                        tag: 'a',
+                        attr: ['href'],
+                        value: ['/user/{{../idUser}}/courses/api/{{this._id}}'],
+                        content: 'Có',
+                    }, {
+                        tag: 'div',
+                        attr: ['onclick'],
+                        value: ['closeDialog()'],
+                        content: 'Không',
+                    }])">Remove
+            </a>
         </div>
     </div>
     {{/each}}
-    <div class="row modal__dialog hide">
-        <div class="col xl-4 md-4 modal__dialog-background">
-            <div class="row modal__dialog-heading">
-                <div class="col xl-11 md-7 modal__dialog-heading-title">Cảnh báo xóa</div>
-                <div class="col xl md modal__dialog-heading-close" onclick="showDialog(false)">X</div>
-            </div>
-            <div class="row modal__dialog-content">
-                <div class="col xl-max md-max modal__dialog-content-message">
-                    Bạn thực sự muốn xóa khóa học này ?
-                </div>
-            </div>
-            <div class="row modal__dialog-confirm">
-                <div class="col xl-6 md-4 modal__dialog-confirm-btn">Có</div>
-                <div class="col xl-6 md-4 modal__dialog-confirm-btn" onclick="showDialog(false)">Không</div>
-            </div>
-        </div>
-    </div>
+    <style>
+        {
+                {
+                style
+            }
+        }
+    </style>
+    <div id="{{opsFormDialogDelete.selector}}"></div>
+    <script>
+        const opsFormDialogDelete = {
+            selector: '{{opsFormDialogDelete.selector}}',
+            class: '{{opsFormDialogDelete.class}}',
+            type: '{{opsFormDialogDelete.type}}',
+            title: 'Xóa khóa học',
+            message: 'Bạn thực sự muốn xóa khóa học này?',
+            btnClose: {
+                tag: 'div',
+                attr: ['onclick'],
+                value: ['closeDialog()'],
+                content: 'X',
+            },
+        }
+        const formDialogDeleteCourse = {{ FormDialog }};
+        formDialogDeleteCourse.init(opsFormDelete);
+        formDialogDeleteCourse.createDialog();
+    </script>
 </div>
-
-<script>
-    const eParent = document.querySelector('.modal__dialog');
-    const showDialog = (isShow = true) => {
-        return !isShow ? eParent.classList.add('hide') : eParent.classList.remove('hide');
-    };
-</script>

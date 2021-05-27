@@ -16,28 +16,18 @@ import route from './routes/index.route.js';
 // Utils
 import { sum, isEven, compare, formatDate } from './util/handlbars.js';
 import { sassRender } from './util/sass.js';
-
-/**
- * Declaration variabkes
- */
-// Variables
-const __dirname = path.join(path.resolve(), 'src');
-const appFolder = {
-    resources: path.join(__dirname, 'resources'),
-    public: path.join(__dirname, 'public'),
-};
-const nameCollection = 'education_dev';
+import RootApp from './util/app.js';
 
 /**
  * Code here
  */
 // Connect to DB
-if (await db.connect(nameCollection)) {
+if (await db.connect(RootApp.NameCollection())) {
     // db.init();
     // Render SCSS
     const isSassRender = sassRender(
-        path.join(__dirname, 'resources/scss/app.scss'),
-        path.join(__dirname, 'public/css/app.css'),
+        path.join(RootApp.Dirname(), 'resources/scss/app.scss'),
+        path.join(RootApp.Dirname(), 'public/css/app.css'),
         'compressed',
     );
     if (isSassRender) {
@@ -46,7 +36,7 @@ if (await db.connect(nameCollection)) {
         const port = 3000;
 
         // Set Folder Static
-        app.use(express.static(appFolder.public));
+        app.use(express.static(RootApp.RootFolder().public));
         // HTTP logger
         app.use(morgan('dev'));
         // Midleware
@@ -68,8 +58,8 @@ if (await db.connect(nameCollection)) {
             }),
         );
         app.set('view engine', 'hbs');
-        app.set('views', path.join(appFolder.resources, 'views'));
-        app.set('view options', { dirname: __dirname });
+        app.set('views', path.join(RootApp.RootFolder().resources, 'views'));
+        app.set('view options', { dirname: RootApp.Dirname() });
 
         // HTTP Protocol
         route(app);

@@ -2,6 +2,10 @@ import { doctumentsToObjects, doctumentToObject } from '../../util/mongoose.js';
 import { CourseModel, CourseLevelModel } from '../models/course.model.js';
 import { AuthorModel } from '../models/author.model.js';
 
+// Utils
+import { sassRenderToCss } from '../../util/sass.js';
+import AppRoot from '../../util/app.js';
+
 const UserController = {
     /**
      * PAGES
@@ -17,7 +21,23 @@ const UserController = {
                 courses = doctumentsToObjects(docs);
             })
             .catch(next);
-        res.render('users/courses/index', { idUser, courses });
+
+        let opsFormDialogDelete = {
+            selector: 'modal__dialog',
+            class: 'form-dialog',
+            type: 'warn',
+        };
+        let cssRender = sassRenderToCss(
+            'base',
+            `showDialog("${opsFormDialogDelete.selector}","${opsFormDialogDelete.class}","${opsFormDialogDelete.type}");`,
+        );
+        console.log(cssRender);
+        res.render('users/courses/index', {
+            idUser,
+            courses,
+            cssRender,
+            opsFormDialogDelete,
+        });
     },
     // [GET] /:idUser/courses/page/detail/:idCourse
     async coursePageDetail(req, res, next) {

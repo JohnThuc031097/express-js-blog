@@ -17,6 +17,7 @@ UserRoute.get(
     '/:idUser/courses/page/detail/:idCourse',
     UserController['coursePageDetail'],
 );
+
 // APIS
 UserRoute.post('/:idUser/courses/api', UserController['courseAdd']);
 UserRoute.put('/:idUser/courses/api/:idCourse', UserController['courseUpdate']);

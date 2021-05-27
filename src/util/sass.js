@@ -1,9 +1,30 @@
 import fs from 'fs';
-import sass from 'node-sass';
+import nodeSass from 'node-sass';
+
+const sassRenderToCss = (file, mixin) => {
+    return nodeSass
+        .renderSync(
+            {
+                // data: `
+                //     @use './../resources/scss/${file}';
+                //     @include ${mixin};
+                //     `,
+                data: `
+                @use './resources/scss/base';
+                @include showDialog();
+                `,
+                outputStyle: 'nested',
+            },
+            (err) => {
+                console.log('[SASS] -> [Error] ', err);
+            },
+        )
+        .css.toString();
+};
 
 const sassRender = (file, outfile, outputStyle) => {
     let isSucess = true;
-    sass.render(
+    nodeSass.render(
         {
             file,
             outfile,
@@ -28,4 +49,4 @@ const sassRender = (file, outfile, outputStyle) => {
     return isSucess;
 };
 
-export { sassRender };
+export { sassRender, sassRenderToCss };
