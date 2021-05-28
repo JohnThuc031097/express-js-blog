@@ -1,25 +1,19 @@
 import fs from 'fs';
 import nodeSass from 'node-sass';
 
-const sassRenderToCss = (file, mixin) => {
-    return nodeSass
-        .renderSync(
-            {
-                // data: `
-                //     @use './../resources/scss/${file}';
-                //     @include ${mixin};
-                //     `,
-                data: `
-                @use './resources/scss/base';
-                @include showDialog();
-                `,
-                outputStyle: 'nested',
-            },
-            (err) => {
-                console.log('[SASS] -> [Error] ', err);
-            },
-        )
-        .css.toString();
+const sassRenderToCss = (scssMixin, callMixin) => {
+    let result = undefined;
+    try {
+        result = nodeSass
+            .renderSync({
+                data: `${scssMixin};@include ${callMixin};`,
+                outputStyle: 'compressed',
+            })
+            .css.toString();
+    } catch (error) {
+        result = 'error';
+    }
+    return result;
 };
 
 const sassRender = (file, outfile, outputStyle) => {

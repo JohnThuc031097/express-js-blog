@@ -18,9 +18,6 @@ import { sum, isEven, compare, formatDate } from './util/handlbars.js';
 import { sassRender } from './util/sass.js';
 import RootApp from './util/app.js';
 
-/**
- * Code here
- */
 // Connect to DB
 if (await db.connect(RootApp.NameCollection())) {
     // db.init();
