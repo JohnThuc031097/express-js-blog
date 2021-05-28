@@ -11,7 +11,7 @@ const sassRenderToCss = (scssMixin, callMixin) => {
             })
             .css.toString();
     } catch (error) {
-        result = 'error';
+        result = '[SASS] -> [Error]: ' + error;
     }
     return result;
 };

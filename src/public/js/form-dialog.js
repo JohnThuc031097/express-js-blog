@@ -13,6 +13,7 @@ const FormDialog = () => {
     return {
         init(ops, css) {
             setOptions(ops, css);
+            _$(`#${_options.style}`).innerHTML = `<style>${_cssRender}</style>`;
         },
         createDialog() {
             const htmlDialog = /*html*/ `
@@ -26,7 +27,6 @@ const FormDialog = () => {
                     <div class="row ${_options.class}-confirm">
                     </div>
                 </div>`;
-            _$(`#${_options.style}`).innerHTML = `<style>${_cssRender}</style>`;
             _rootElement.classList.add(`${_options.class}`);
             _rootElement.innerHTML = htmlDialog;
         },
@@ -85,6 +85,7 @@ const FormDialog = () => {
             _rootElement.classList.remove('hide');
         },
         closeDialog() {
+            this.createDialog();
             _rootElement.classList.add('hide');
         },
     };

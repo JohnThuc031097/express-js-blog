@@ -31,11 +31,7 @@ const UserController = {
             style: 'css-render',
         };
         let scssMixin = `
-        @mixin showDialog(
-    $selector: 'modal__dialog',
-    $class: 'form-dialog',
-    $type: 'info'
-) {
+            @mixin showDialog($selector: "modal__dialog", $class: "form-dialog", $type: "info") {
     ##{$selector} {
         &.#{$class} {
             &.hide {
@@ -48,75 +44,75 @@ const UserController = {
             bottom: 0;
             background-color: rgba(0, 0, 0, 0.288);
             cursor: default;
-
-            > .#{$class}-background {
-                position: absolute;
-                top: 20%;
-                width: 100%;
-                background-color: #fff;
-                border-radius: 5px;
-
-                > .#{$class}-heading {
-                    font-size: 20px;
-                    margin: 10px 0;
-                    padding-bottom: 10px;
-                    border-bottom: 1px solid rgb(204, 193, 193);
-                    @at-root {
-                        .#{$class}-heading-title {
-                            @if ($type == 'info') {
-                                color: rgb(33, 33, 219);
-                            } @else if ($type == 'warn') {
-                                color: rgb(238, 141, 51);
-                            } @else if ($type == 'success') {
-                                color: rgb(6, 177, 57);
-                            } @else if ($type == 'error') {
-                                color: rgb(196, 57, 15);
+            > {
+                .#{$class}-background {
+                    position: absolute;
+                    top: 20%;
+                    width: 100%;
+                    background-color: #fff;
+                    border-radius: 5px;
+                    > {
+                        .#{$class}-heading {
+                            font-size: 20px;
+                            margin: 10px 0;
+                            padding-bottom: 10px;
+                            border-bottom: 1px solid rgb(204, 193, 193);
+                            > {
+                                .#{$class}-heading-title {
+                                    @if ($type == "info") {
+                                        color: rgb(33, 33, 219);
+                                    } @else if ($type == "warn") {
+                                        color: rgb(238, 141, 51);
+                                    } @else if ($type == "success") {
+                                        color: rgb(6, 177, 57);
+                                    } @else if ($type == "error") {
+                                        color: rgb(196, 57, 15);
+                                    }
+                                    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+                                    font-weight: 600;
+                                    text-transform: uppercase;
+                                }
+                                .#{$class}-heading-close {
+                                    background-color: red;
+                                    color: #fff;
+                                    text-align: center;
+                                    cursor: pointer;
+                                    &:hover {
+                                        opacity: 0.6;
+                                    }
+                                }
                             }
-                            font-family: 'Segoe UI', Tahoma, Geneva, Verdana,
-                                sans-serif;
+                        }
+
+                        .#{$class}-content {
+                            margin: 10px 10px;
+                            > {
+                                .#{$class}-content-message {
+                                    font-size: 18px;
+                                    line-height: 1.6;
+                                }
+                            }
+                        }
+
+                        .#{$class}-confirm {
+                            font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
                             font-weight: 600;
                             text-transform: uppercase;
-                        }
-                        .#{$class}-heading-close {
-                            background-color: red;
-                            color: #fff;
                             text-align: center;
-                            cursor: pointer;
-                            &:hover {
-                                opacity: 0.6;
-                            }
-                        }
-                    }
-                }
+                            margin: 5px 0;
+                            padding-top: 10px;
+                            border-top: 1px solid rgb(204, 193, 193);
+                            > {
+                                .#{$class}-confirm-btn {
+                                    cursor: pointer;
+                                    padding: 5px 0;
 
-                > .#{$class}-content {
-                    margin: 10px 10px;
-                    @at-root {
-                        .#{$class}-content-message {
-                            font-size: 18px;
-                            line-height: 1.6;
-                        }
-                    }
-                }
-
-                > .#{$class}-confirm {
-                    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-                    font-weight: 600;
-                    text-transform: uppercase;
-                    text-align: center;
-                    margin: 5px 0;
-                    padding-top: 10px;
-                    border-top: 1px solid rgb(204, 193, 193);
-
-                    @at-root {
-                        .#{$class}-confirm-btn {
-                            cursor: pointer;
-                            padding: 5px 0;
-
-                            &:hover {
-                                color: red;
-                                border-bottom: 2px solid red;
-                                cursor: pointer;
+                                    &:hover {
+                                        color: red;
+                                        border-bottom: 2px solid red;
+                                        cursor: pointer;
+                                    }
+                                }
                             }
                         }
                     }

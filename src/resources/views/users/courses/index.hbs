@@ -23,7 +23,7 @@
                     yes: {
                         tag: 'a',
                         attr: ['href'],
-                        value: ['/user/{{../idUser}}/courses/api/{{this._id}}'],
+                        value: ['/user/{{../idUser}}/courses/api/{{this._id}}?_method=DELETE'],
                         content: 'Có',
                     },
                     no: {
@@ -39,7 +39,7 @@
     <div id="{{opsFormDialogDelete.style}}"></div>
     <div id="{{opsFormDialogDelete.selector}}" class="row hide"></div>
     <script>
-        const cssRender = `{{cssRender}}`;
+        const cssRender = `{{{cssRender}}}`;
         const opsDelete = {
             selector: '{{opsFormDialogDelete.selector}}',
             class: '{{opsFormDialogDelete.class}}',
