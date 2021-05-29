@@ -8,6 +8,10 @@ const isEven = function (num) {
     return num % 2 == 0;
 };
 
+const json = function (context) {
+    return JSON.stringify(context);
+};
+
 const compare = function (lvalue, operator, rvalue, options) {
     let operators, result;
 
@@ -74,4 +78,4 @@ const formatDate = function (timestamp) {
     return moment(timestamp).format('DD-MM-yyyy hh:mm:ss');
 };
 
-export { sum, isEven, compare, formatDate };
+export { sum, isEven, compare, formatDate, json };

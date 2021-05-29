@@ -19,7 +19,7 @@
         <div class="col xl md text-center container__courses-user-table-item--controls">
             <a class="container__courses-user-table-item-child btn text-link"
                 href="/user/{{../idUser}}/courses/page/edit/{{this._id}}">Edit</a>
-            <a class="container__courses-user-table-item-child btn text-link" onclick="frmDialogCourseRemove.showDialog(
+            <a class="container__courses-user-table-item-child btn text-link" onclick="frmDialogCourseDelete.showDialog(
                 {
                     value: '/user/{{../idUser}}/courses/api/remove/{{this._id}}?_method=PUT',
                     button: {
@@ -29,6 +29,12 @@
                             value: ['submit', 'Có'],
                             content: '',
                         },
+                        no: {
+                            tag: 'input',
+                            attr: ['type','value','onclick'],
+                            value: ['button','Không','frmDialogCourseDelete.closeDialog()'],
+                            content: '',
+                        }
                     },
                 })">Remove
             </a>
@@ -42,20 +48,12 @@
         const cssRender = `{{{ cssRender }}}`;
         const optionsDialog = {{{ json optionsDialog }}};
 
-        const frmDialogCourseRemove = FormDialog();
-        frmDialogCourseRemove.init(optionsDialog, cssRender);
-        frmDialogCourseRemove.createDialog({
+        const frmDialogCourseDelete = FormDialog();
+        frmDialogCourseDelete.init(optionsDialog, cssRender);
+        frmDialogCourseDelete.createDialog({
             type: 'warn',
             title: 'Xóa khóa học',
             message: 'Bạn thực sự muốn xóa khóa học này?',
-            button: {
-                no: {
-                    tag: 'input',
-                    attr: ['type', 'value'],
-                    value: ['button', 'Không'],
-                    isExit: true,
-                }
-            },
         });
     </script>
 </div>

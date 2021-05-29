@@ -14,7 +14,7 @@ import db from './config/db/index.js';
 // Routes
 import route from './routes/index.route.js';
 // Utils
-import { sum, isEven, compare, formatDate } from './util/handlbars.js';
+import { sum, isEven, compare, formatDate, json } from './util/handlbars.js';
 import { sassRender } from './util/sass.js';
 import RootApp from './util/app.js';
 
@@ -49,6 +49,7 @@ if (await db.connect(RootApp.NameCollection())) {
                 helpers: {
                     sum,
                     isEven,
+                    json,
                     compare,
                     formatDate,
                 },

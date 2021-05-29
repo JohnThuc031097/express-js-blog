@@ -8,7 +8,7 @@ import { sassRenderToCss } from '../../util/sass.js';
 
 const UserController = {
     /**
-     * PAGES
+     * PAGE
      */
     // [GET] /:idUser/course/page
     async coursePageIndex(req, res, next) {
@@ -21,15 +21,13 @@ const UserController = {
                 courses = doctumentsToObjects(docs);
             })
             .catch(next);
-
-        let opsFormDialogDelete = {
+        let optionsDialog = {
             selector: 'modal__dialog',
             class: 'form-dialog',
-            type: 'warn',
             style: 'css-render',
         };
         let scssMixin = `
-            @mixin showDialog($selector: "modal__dialog", $class: "form-dialog", $type: "info") {
+            @mixin showDialog($selector: "modal__dialog", $class: "form-dialog") {
     ##{$selector} {
         &.#{$class} {
             &.hide {
@@ -57,15 +55,7 @@ const UserController = {
                             border-bottom: 1px solid rgb(204, 193, 193);
                             > {
                                 .#{$class}-heading-title {
-                                    @if ($type == "info") {
-                                        color: rgb(33, 33, 219);
-                                    } @else if ($type == "warn") {
-                                        color: rgb(238, 141, 51);
-                                    } @else if ($type == "success") {
-                                        color: rgb(6, 177, 57);
-                                    } @else if ($type == "error") {
-                                        color: rgb(196, 57, 15);
-                                    }
+                                    color: rgb(33, 33, 219);
                                     font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
                                     font-weight: 600;
                                     text-transform: uppercase;
@@ -126,9 +116,133 @@ const UserController = {
         `;
         let cssRender = sassRenderToCss(
             scssMixin,
-            `showDialog("${opsFormDialogDelete.selector}","${opsFormDialogDelete.class}","${opsFormDialogDelete.type}")`,
+            `showDialog("${optionsDialog.selector}","${optionsDialog.class}")`,
         );
         res.render('users/courses/index', {
+            idUser,
+            courses,
+            cssRender,
+            optionsDialog,
+        });
+    },
+    // [GET] /:idUser/courses/page/bin
+    async coursePageDeleted(req, res, next) {
+        const idUser = req.params?.idUser;
+        let courses = [];
+        await CourseModel.findDeleted((err, docs) => {
+            if (err) {
+                return next;
+            } else {
+                courses = doctumentsToObjects(docs);
+            }
+        });
+        let opsFormDialogDelete = {
+            selector: 'modal__dialog',
+            class: 'form-dialog',
+            type: 'warn',
+            style: 'css-render',
+        };
+        let scssMixin = `
+                    @mixin showDialog($selector: "modal__dialog", $class: "form-dialog", $type: "info") {
+            ##{$selector} {
+                &.#{$class} {
+                    &.hide {
+                        display: none !important;
+                    }
+                    position: fixed;
+                    top: 0;
+                    left: 0;
+                    right: 0;
+                    bottom: 0;
+                    background-color: rgba(0, 0, 0, 0.288);
+                    cursor: default;
+                    > {
+                        .#{$class}-background {
+                            position: absolute;
+                            top: 20%;
+                            width: 100%;
+                            background-color: #fff;
+                            border-radius: 5px;
+                            > {
+                                .#{$class}-heading {
+                                    font-size: 20px;
+                                    margin: 10px 0;
+                                    padding-bottom: 10px;
+                                    border-bottom: 1px solid rgb(204, 193, 193);
+                                    > {
+                                        .#{$class}-heading-title {
+                                            @if ($type == "info") {
+                                                color: rgb(33, 33, 219);
+                                            } @else if ($type == "warn") {
+                                                color: rgb(238, 141, 51);
+                                            } @else if ($type == "success") {
+                                                color: rgb(6, 177, 57);
+                                            } @else if ($type == "error") {
+                                                color: rgb(196, 57, 15);
+                                            }
+                                            font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+                                            font-weight: 600;
+                                            text-transform: uppercase;
+                                        }
+                                        .#{$class}-heading-close {
+                                            background-color: red;
+                                            color: #fff;
+                                            text-align: center;
+                                            border-radius: 3px;
+                                            cursor: pointer;
+                                            &:hover {
+                                                opacity: 0.6;
+                                            }
+                                        }
+                                    }
+                                }
+
+                                .#{$class}-content {
+                                    margin: 10px 10px;
+                                    > {
+                                        .#{$class}-content-message {
+                                            font-size: 18px;
+                                            line-height: 1.6;
+                                        }
+                                    }
+                                }
+
+                                .#{$class}-confirm {
+                                    margin: 5px 0;
+                                    padding-top: 10px;
+                                    border-top: 1px solid rgb(204, 193, 193);
+                                    > {
+                                        .#{$class}-confirm-btn {
+                                            background-color: transparent;
+                                            font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+                                            font-weight: 600;
+                                            text-transform: uppercase;
+                                            text-align: center;
+                                            border: none;
+                                            padding: 5px 0;
+                                            border-bottom: 2px solid transparent;
+                                            cursor: pointer;
+
+                                            &:hover {
+                                                color: red;
+                                                border-bottom-color: red;
+                                                cursor: pointer;
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+                `;
+        let cssRender = sassRenderToCss(
+            scssMixin,
+            `showDialog("${opsFormDialogDelete.selector}","${opsFormDialogDelete.class}","${opsFormDialogDelete.type}")`,
+        );
+        res.render('users/courses/bin', {
             idUser,
             courses,
             cssRender,
@@ -176,10 +290,9 @@ const UserController = {
     },
 
     /**
-     * APIS
-     *
+     * API
      */
-    // [POST]
+    // [POST] /:idUser/courses/api
     async courseAdd(req, res, next) {
         const idUser = req.params?.idUser;
         let course = req?.body;
@@ -198,13 +311,12 @@ const UserController = {
             .save()
             .then((docSaved) => {
                 docSaved = doctumentToObject(docSaved);
-                res.redirect(`/user/${idUser}/courses/page/`);
+                res.redirect('back');
             })
             .catch(next);
     },
-    // [PUT]
+    // [PUT] /:idUser/courses/api/:idCourse
     async courseUpdate(req, res, next) {
-        const idUser = req.params?.idUser;
         const idCourse = req.params?.idCourse;
         const course = req?.body;
         await CourseLevelModel.findById(course?.level)
@@ -214,19 +326,45 @@ const UserController = {
             .catch(next);
         await CourseModel.findByIdAndUpdate(idCourse, course)
             .then(() => {
-                res.redirect(`/user/${idUser}/courses/page/`);
+                res.redirect('back');
             })
             .catch(next);
     },
     // [DELETE]
+    // Force delete
     async courseDelete(req, res, next) {
-        const idUser = req.params?.idUser;
         const idCourse = req.params?.idCourse;
         await CourseModel.findByIdAndDelete(idCourse)
             .then(() => {
-                res.redirect(`/user/${idUser}/courses/page`);
+                res.redirect('back');
             })
             .catch(next);
+    },
+    // [PUT]
+    // Soft delete (Remove)
+    async courseRemove(req, res, next) {
+        const idCourse = req.params?.idCourse;
+        CourseModel.deleteById(idCourse, (err, doc) => {
+            if (err) {
+                res.send(next);
+            } else {
+                console.log('[Push to Bin]: ', doc);
+                res.redirect('back');
+            }
+        });
+    },
+    // [PUT]
+    // Restore when after removed
+    async courseRestore(req, res, next) {
+        const idCourse = req.params?.idCourse;
+        CourseModel.restore({ _id: idCourse }, (err, result) => {
+            if (err) {
+                res.send(next);
+            } else {
+                console.log('[Restore form Bin]: ', result);
+                res.redirect('back');
+            }
+        });
     },
 };
 
