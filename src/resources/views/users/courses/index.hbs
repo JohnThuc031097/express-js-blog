@@ -19,25 +19,31 @@
         <div class="col xl md text-center container__courses-user-table-item--controls">
             <a class="container__courses-user-table-item-child btn text-link"
                 href="/user/{{../idUser}}/courses/page/edit/{{this._id}}">Edit</a>
-            <a class="container__courses-user-table-item-child btn text-link" onclick="formDialogDeleteCourse.showDialog({
-                    yes: {
-                        tag: 'a',
-                        attr: ['href'],
-                        value: ['/user/{{../idUser}}/courses/api/{{this._id}}?_method=DELETE'],
-                        content: 'Có',
+            <a class="container__courses-user-table-item-child btn text-link" onclick="formDialogDeleteCourse.showDialog(
+                {
+                    value: '/user/{{../idUser}}/courses/api/{{this._id}}?_method=DELETE',
+                    button: {
+                        yes: {
+                            tag: 'input',
+                            attr: ['type', 'value'],
+                            value: ['submit', 'Có'],
+                            content: '',
+                        },
+                        no: {
+                            tag: 'input',
+                            attr: ['type','value','onclick'],
+                            value: ['button','Không','formDialogDeleteCourse.closeDialog()'],
+                            content: '',
+                        }
                     },
-                    no: {
-                        tag: 'div',
-                        attr: ['onclick'],
-                        value: ['formDialogDeleteCourse.closeDialog()'],
-                        content: 'Không',
-                    }})">Remove
+                })">Remove
             </a>
         </div>
     </div>
     {{/each}}
     <div id="{{opsFormDialogDelete.style}}"></div>
-    <div id="{{opsFormDialogDelete.selector}}" class="row hide"></div>
+    <form id="{{opsFormDialogDelete.selector}}" class="row hide" method="POST" action="/">
+    </form>
     <script>
         const cssRender = `{{{cssRender}}}`;
         const opsDelete = {
@@ -46,15 +52,7 @@
             type: '{{opsFormDialogDelete.type}}',
             style: '{{opsFormDialogDelete.style}}',
             title: 'Xóa khóa học',
-            message: 'Bạn thực sự muốn xóa khóa học này?',
-            button: {
-                close: {
-                    tag: 'div',
-                    attr: ['onclick'],
-                    value: ['formDialogDeleteCourse.closeDialog()'],
-                    content: 'X',
-                },
-            }
+            message: 'Bạn thực sự muốn xóa khóa học này?'
         }
         const formDialogDeleteCourse = FormDialog();
         formDialogDeleteCourse.init(opsDelete, cssRender);

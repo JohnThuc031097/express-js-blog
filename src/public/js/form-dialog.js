@@ -1,12 +1,21 @@
 const FormDialog = () => {
     const _$ = document.querySelector.bind(document);
     const _$$ = document.querySelectorAll.bind(document);
-    let _options = {};
+    let _options = {
+        button: {
+            close: {
+                tag: 'div',
+                attr: ['onclick'],
+                value: ['formDialogDeleteCourse.closeDialog()'],
+                content: 'X',
+            },
+        },
+    };
     let _cssRender = undefined;
     let _rootElement = undefined;
 
     const setOptions = (ops, css) => {
-        ops && (_options = ops);
+        ops && (_options = { button: _options['button'], ...ops });
         css && (_cssRender = css);
         _rootElement = _$(`#${_options.selector}`);
     };
@@ -31,14 +40,24 @@ const FormDialog = () => {
             _rootElement.innerHTML = htmlDialog;
         },
         showDialog(data) {
-            data && (_options['button'] = { ..._options['button'], ...data });
+            if (data) {
+                _options['value'] = data['value'];
+                _options['button'] = {
+                    ...data['button'],
+                    ..._options['button'],
+                };
+            }
             // console.log(_options);
 
+            const eBackground = _$(`.${_options.class}-background`);
             const eHeading = _$(`.${_options.class}-heading`);
             const eContentMessage = _$(`.${_options.class}-content-message`);
             const eConfirm = _$(`.${_options.class}-confirm`);
             const btnList = _options['button'];
             let btnIndex = 1;
+
+            // Insert value
+            _rootElement.action = _options.value;
 
             for (const key in btnList) {
                 let oBtn = {
@@ -86,6 +105,7 @@ const FormDialog = () => {
         },
         closeDialog() {
             this.createDialog();
+            _rootElement.action = '/';
             _rootElement.classList.add('hide');
         },
     };

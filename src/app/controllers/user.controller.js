@@ -1,12 +1,10 @@
-import { doctumentsToObjects, doctumentToObject } from '../../util/mongoose.js';
+// Import Models
 import { CourseModel, CourseLevelModel } from '../models/course.model.js';
 import { AuthorModel } from '../models/author.model.js';
 
-// Utils
+// Import Utils
+import { doctumentsToObjects, doctumentToObject } from '../../util/mongoose.js';
 import { sassRenderToCss } from '../../util/sass.js';
-import AppRoot from '../../util/app.js';
-
-import path from 'path';
 
 const UserController = {
     /**
@@ -76,6 +74,7 @@ const UserController = {
                                     background-color: red;
                                     color: #fff;
                                     text-align: center;
+                                    border-radius: 3px;
                                     cursor: pointer;
                                     &:hover {
                                         opacity: 0.6;
@@ -95,21 +94,24 @@ const UserController = {
                         }
 
                         .#{$class}-confirm {
-                            font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-                            font-weight: 600;
-                            text-transform: uppercase;
-                            text-align: center;
                             margin: 5px 0;
                             padding-top: 10px;
                             border-top: 1px solid rgb(204, 193, 193);
                             > {
                                 .#{$class}-confirm-btn {
-                                    cursor: pointer;
+                                    background-color: transparent;
+                                    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+                                    font-weight: 600;
+                                    text-transform: uppercase;
+                                    text-align: center;
+                                    border: none;
                                     padding: 5px 0;
+                                    border-bottom: 2px solid transparent;
+                                    cursor: pointer;
 
                                     &:hover {
                                         color: red;
-                                        border-bottom: 2px solid red;
+                                        border-bottom-color: red;
                                         cursor: pointer;
                                     }
                                 }
@@ -176,7 +178,6 @@ const UserController = {
     /**
      * APIS
      *
-     * Url: /:idUser/courses/api
      */
     // [POST]
     async courseAdd(req, res, next) {
