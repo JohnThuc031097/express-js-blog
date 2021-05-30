@@ -22,14 +22,19 @@
             <a class="container__courses-user-table-item-child btn text-link" onclick="frmDialogCourseRemove.showDialog(
                 {
                     value: '/user/{{../idUser}}/courses/api/remove/{{this._id}}?_method=PUT',
-                    button: {
-                        yes: {
+                    button: [
+                        {
                             tag: 'input',
-                            attr: ['type', 'value'],
-                            value: ['submit', 'Có'],
-                            content: '',
+                            attrs: ['type', 'value'],
+                            values: ['submit', 'Có'],
                         },
-                    },
+                        {          
+                            tag: 'input',
+                            attrs: ['type', 'value'],
+                            values: ['button', 'Không'],
+                            isExit: true,
+                        },
+                    ]
                 })">Remove
             </a>
         </div>
@@ -46,16 +51,8 @@
         frmDialogCourseRemove.init(optionsDialog, cssRender);
         frmDialogCourseRemove.createDialog({
             type: 'warn',
-            title: 'Xóa khóa học',
-            message: 'Bạn thực sự muốn xóa khóa học này?',
-            button: {
-                no: {
-                    tag: 'input',
-                    attr: ['type', 'value'],
-                    value: ['button', 'Không'],
-                    isExit: true,
-                }
-            },
+            title: 'Loại bỏ khóa học',
+            message: 'Bạn thực sự muốn loại bỏ khóa học này?',
         });
     </script>
 </div>

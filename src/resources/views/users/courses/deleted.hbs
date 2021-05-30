@@ -17,26 +17,40 @@
         <div class="col xl md text-center container__courses-user-table-item">{{this.level.name}}</div>
         <div class="col xl md text-center container__courses-user-table-item">{{formatDate this.createdAt}}</div>
         <div class="col xl md text-center container__courses-user-table-item--controls">
-            <a class="container__courses-user-table-item-child btn text-link"
-                href="/user/{{../idUser}}/courses/page/edit/{{this._id}}">Edit</a>
+            <a class="container__courses-user-table-item-child btn text-link" onclick="frmDialogCourseRestore.showDialog(
+                {
+                    value: '/user/{{../idUser}}/courses/api/restore/{{this._id}}?_method=PUT',
+                    button: [
+                        {
+                            tag: 'input',
+                            attrs: ['type', 'value'],
+                            values: ['submit', 'Có'],
+                        },
+                        {          
+                            tag: 'input',
+                            attrs: ['type', 'value'],
+                            values: ['button', 'Không'],
+                            isExit: true,
+                        },
+                    ]
+                })">Restore</a>
             <a class="container__courses-user-table-item-child btn text-link" onclick="frmDialogCourseDelete.showDialog(
                 {
-                    value: '/user/{{../idUser}}/courses/api/remove/{{this._id}}?_method=PUT',
-                    button: {
-                        yes: {
+                    value: '/user/{{../idUser}}/courses/api/delete/{{this._id}}?_method=DELETE',
+                    button: [
+                        {
                             tag: 'input',
-                            attr: ['type', 'value'],
-                            value: ['submit', 'Có'],
-                            content: '',
+                            attrs: ['type', 'value'],
+                            values: ['submit', 'Có'],
                         },
-                        no: {
+                        {          
                             tag: 'input',
-                            attr: ['type','value','onclick'],
-                            value: ['button','Không','frmDialogCourseDelete.closeDialog()'],
-                            content: '',
-                        }
-                    },
-                })">Remove
+                            attrs: ['type', 'value'],
+                            values: ['button', 'Không'],
+                            isExit: true,
+                        },
+                    ]
+                })">Delete
             </a>
         </div>
     </div>
@@ -54,6 +68,13 @@
             type: 'warn',
             title: 'Xóa khóa học',
             message: 'Bạn thực sự muốn xóa khóa học này?',
+        });
+        const frmDialogCourseRestore = FormDialog();
+        frmDialogCourseRestore.init(optionsDialog, cssRender);
+        frmDialogCourseRestore.createDialog({
+            type: 'info',
+            title: 'Khôi phục khóa học',
+            message: 'Bạn muốn khôi phục khóa học này?',
         });
     </script>
 </div>

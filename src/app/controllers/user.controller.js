@@ -83,12 +83,15 @@ const UserController = {
                             }
                         }
 
-                        .#{$class}-confirm {
+                        .#{$class}-footer {
+                            display: flex;
+                            justify-content: center;
                             margin: 5px 0;
                             padding-top: 10px;
                             border-top: 1px solid rgb(204, 193, 193);
                             > {
-                                .#{$class}-confirm-btn {
+                                .#{$class}-footer-btn {
+                                    flex-grow: 1;
                                     background-color: transparent;
                                     font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
                                     font-weight: 600;
@@ -129,106 +132,98 @@ const UserController = {
     async coursePageDeleted(req, res, next) {
         const idUser = req.params?.idUser;
         let courses = [];
-        await CourseModel.findDeleted((err, docs) => {
-            if (err) {
-                return next;
-            } else {
+        await CourseModel.findDeleted({ author: idUser })
+            .populate('author')
+            .populate('level')
+            .then((docs) => {
                 courses = doctumentsToObjects(docs);
-            }
-        });
-        let opsFormDialogDelete = {
+            })
+            .catch(next);
+        let optionsDialog = {
             selector: 'modal__dialog',
             class: 'form-dialog',
-            type: 'warn',
             style: 'css-render',
         };
         let scssMixin = `
-                    @mixin showDialog($selector: "modal__dialog", $class: "form-dialog", $type: "info") {
-            ##{$selector} {
-                &.#{$class} {
-                    &.hide {
-                        display: none !important;
-                    }
-                    position: fixed;
-                    top: 0;
-                    left: 0;
-                    right: 0;
-                    bottom: 0;
-                    background-color: rgba(0, 0, 0, 0.288);
-                    cursor: default;
+            @mixin showDialog($selector: "modal__dialog", $class: "form-dialog") {
+    ##{$selector} {
+        &.#{$class} {
+            &.hide {
+                display: none !important;
+            }
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.288);
+            cursor: default;
+            > {
+                .#{$class}-background {
+                    position: absolute;
+                    top: 20%;
+                    width: 100%;
+                    background-color: #fff;
+                    border-radius: 5px;
                     > {
-                        .#{$class}-background {
-                            position: absolute;
-                            top: 20%;
-                            width: 100%;
-                            background-color: #fff;
-                            border-radius: 5px;
+                        .#{$class}-heading {
+                            font-size: 20px;
+                            margin: 10px 0;
+                            padding-bottom: 10px;
+                            border-bottom: 1px solid rgb(204, 193, 193);
                             > {
-                                .#{$class}-heading {
-                                    font-size: 20px;
-                                    margin: 10px 0;
-                                    padding-bottom: 10px;
-                                    border-bottom: 1px solid rgb(204, 193, 193);
-                                    > {
-                                        .#{$class}-heading-title {
-                                            @if ($type == "info") {
-                                                color: rgb(33, 33, 219);
-                                            } @else if ($type == "warn") {
-                                                color: rgb(238, 141, 51);
-                                            } @else if ($type == "success") {
-                                                color: rgb(6, 177, 57);
-                                            } @else if ($type == "error") {
-                                                color: rgb(196, 57, 15);
-                                            }
-                                            font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-                                            font-weight: 600;
-                                            text-transform: uppercase;
-                                        }
-                                        .#{$class}-heading-close {
-                                            background-color: red;
-                                            color: #fff;
-                                            text-align: center;
-                                            border-radius: 3px;
-                                            cursor: pointer;
-                                            &:hover {
-                                                opacity: 0.6;
-                                            }
-                                        }
+                                .#{$class}-heading-title {
+                                    color: rgb(33, 33, 219);
+                                    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+                                    font-weight: 600;
+                                    text-transform: uppercase;
+                                }
+                                .#{$class}-heading-close {
+                                    background-color: red;
+                                    color: #fff;
+                                    text-align: center;
+                                    border-radius: 3px;
+                                    cursor: pointer;
+                                    &:hover {
+                                        opacity: 0.6;
                                     }
                                 }
+                            }
+                        }
 
-                                .#{$class}-content {
-                                    margin: 10px 10px;
-                                    > {
-                                        .#{$class}-content-message {
-                                            font-size: 18px;
-                                            line-height: 1.6;
-                                        }
-                                    }
+                        .#{$class}-content {
+                            margin: 10px 10px;
+                            > {
+                                .#{$class}-content-message {
+                                    font-size: 18px;
+                                    line-height: 1.6;
                                 }
+                            }
+                        }
 
-                                .#{$class}-confirm {
-                                    margin: 5px 0;
-                                    padding-top: 10px;
-                                    border-top: 1px solid rgb(204, 193, 193);
-                                    > {
-                                        .#{$class}-confirm-btn {
-                                            background-color: transparent;
-                                            font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-                                            font-weight: 600;
-                                            text-transform: uppercase;
-                                            text-align: center;
-                                            border: none;
-                                            padding: 5px 0;
-                                            border-bottom: 2px solid transparent;
-                                            cursor: pointer;
+                        .#{$class}-footer {
+                            display: flex;
+                            justify-content: center;
+                            margin: 5px 0;
+                            padding-top: 10px;
+                            border-top: 1px solid rgb(204, 193, 193);
+                            > {
+                                .#{$class}-footer-btn {
+                                    flex-grow: 1;
+                                    background-color: transparent;
+                                    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+                                    font-weight: 600;
+                                    text-transform: uppercase;
+                                    text-align: center;
+                                    border: none;
+                                    padding: 5px 0;
+                                    border-bottom: 2px solid transparent;
+                                    cursor: pointer;
 
-                                            &:hover {
-                                                color: red;
-                                                border-bottom-color: red;
-                                                cursor: pointer;
-                                            }
-                                        }
+                                    &:hover {
+                                        color: red;
+                                        border-bottom-color: red;
+                                        cursor: pointer;
                                     }
                                 }
                             }
@@ -237,16 +232,18 @@ const UserController = {
                 }
             }
         }
-                `;
+    }
+}
+        `;
         let cssRender = sassRenderToCss(
             scssMixin,
-            `showDialog("${opsFormDialogDelete.selector}","${opsFormDialogDelete.class}","${opsFormDialogDelete.type}")`,
+            `showDialog("${optionsDialog.selector}","${optionsDialog.class}")`,
         );
-        res.render('users/courses/bin', {
+        res.render('users/courses/deleted', {
             idUser,
             courses,
             cssRender,
-            opsFormDialogDelete,
+            optionsDialog,
         });
     },
     // [GET] /:idUser/courses/page/detail/:idCourse

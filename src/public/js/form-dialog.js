@@ -1,58 +1,59 @@
 const FormDialog = () => {
     const _$ = document.querySelector.bind(document);
     const _$$ = document.querySelectorAll.bind(document);
-    let _options = {};
-    let _data = {};
+    let _formOptions = {};
+    let _formInfo = {};
+    let _formData = {};
     let _cssRender = undefined;
     let _rootElement = undefined;
 
     const setOptions = (ops, css) => {
-        ops && (_options = ops);
+        ops && (_formOptions = ops);
         css && (_cssRender = css);
-        _rootElement = _$(`#${_options.selector}`);
+        _rootElement = _$(`#${_formOptions.selector}`);
     };
     return {
         init(ops, css) {
             setOptions(ops, css);
-            _$(`#${_options.style}`).innerHTML = `<style>${_cssRender}</style>`;
+            _$(
+                `#${_formOptions.style}`,
+            ).innerHTML = `<style>${_cssRender}</style>`;
         },
-        createDialog(data) {
-            data && (_data = data);
+        createDialog(formInfo) {
+            formInfo && (_formInfo = formInfo);
             const htmlDialog = /*html*/ `
-                <div class="col xl-4 md-4 ${_options.class}-background">
-                    <div class="row ${_options.class}-heading">
+                <div class="col xl-4 md-4 ${_formOptions.class}-background">
+                    <div class="row ${_formOptions.class}-heading">
                     </div>
-                    <div class="row ${_options.class}-content">
-                        <div class="col xl-max md-max ${_options.class}-content-message">
+                    <div class="row ${_formOptions.class}-content">
+                        <div class="col xl-max md-max ${_formOptions.class}-content-message">
                         </div>
                     </div>
-                    <div class="row ${_options.class}-confirm">
+                    <div class="row ${_formOptions.class}-footer">
                     </div>
                 </div>`;
-            _rootElement.classList.add(`${_options.class}`);
+            _rootElement.classList.add(`${_formOptions.class}`);
             _rootElement.innerHTML = htmlDialog;
         },
-        showDialog(addData) {
-            _data && (_data = { ..._data, addData });
-            console.log(_options);
+        showDialog(formData) {
+            formData && (_formData = formData);
 
-            const eHeading = _$(`.${_options.class}-heading`);
-            const eHeadingTitle = _$(`.${_options.class}-heading-title`);
-            const eHeadingClose = _$(`.${_options.class}-heading-close`);
-            const eContentMessage = _$(`.${_options.class}-content-message`);
-            const eConfirm = _$(`.${_options.class}-confirm`);
-            const btnList = _data['button'];
+            const eHeading = _$(`.${_formOptions.class}-heading`);
+            const eContentMessage = _$(
+                `.${_formOptions.class}-content-message`,
+            );
+            const eFooter = _$(`.${_formOptions.class}-footer`);
+            const btnList = _formData['button'];
             let btnIndex = 1;
-
-            // Insert value
-            _rootElement.action = _data.value;
 
             // Insert HTML into element Heading
             eHeading.innerHTML = /*html*/ `
-                        <div class="col xl-11 md-7 ${_options.class}-heading-title">${_options.title}</div>
-                        <div class="col xl md ${_options.class}-heading-close"></div>
+                        <div class="col xl-11 md-7 ${_formOptions.class}-heading-title">${_formInfo.title}</div>
+                        <div class="col xl md ${_formOptions.class}-heading-close">X</div>
                     `;
-            switch (_data.type) {
+            const eHeadingTitle = _$(`.${_formOptions.class}-heading-title`);
+            const eHeadingClose = _$(`.${_formOptions.class}-heading-close`);
+            switch (_formInfo.type) {
                 case 'warn':
                     eHeadingTitle.style.color = 'rgb(238, 141, 51)';
                     break;
@@ -71,43 +72,40 @@ const FormDialog = () => {
                 this.closeDialog();
             });
 
-            // Add Content into element
-            eHeadingClose.innerHTML = oBtn.content;
-
-            for (const key in btnList) {
-                let oBtn = {
-                    tag: btnList[key]?.tag || '', // string
-                    attrs: btnList[key]?.attr || [], // array
-                    values: btnList[key]?.value || '', // array
-                    content: btnList[key]?.content || '', // string
-                    isExit: btnList[key]?.isExit || false, // boolean
-                };
+            btnList.forEach((btn) => {
+                btn?.tag || (btn['tag'] = 'button'); // string
+                btn?.attrs || (btn['attrs'] = []); // array
+                btn?.values || (btn['values'] = []); // array
+                btn?.content || (btn['content'] = ''); // string
+                btn?.isExit || (btn.isExit = false); // boolean
 
                 let htmlBtn = `
-                        <${oBtn.tag} class="text-link ${_options.class}-confirm-btn"></${oBtn.tag}>
+                        <${btn.tag} class="text-link ${_formOptions.class}-footer-btn"></${btn.tag}>
                     `;
-                eConfirm.insertAdjacentHTML('beforeend', htmlBtn);
-
-                const eBtn = _$(
-                    `.${_options.class}-confirm-btn:nth-child(${btnIndex++})`,
+                eFooter.insertAdjacentHTML('beforeend', htmlBtn);
+                const btnChild = _$(
+                    `.${
+                        _formOptions.class
+                    }-footer-btn:nth-child(${btnIndex++})`,
                 );
-                oBtn.attrs.forEach((attr, index) => {
-                    eBtn.setAttribute(attr, oBtn.values[index]);
+                btn?.attrs.forEach((attr, index) => {
+                    btnChild.setAttribute(attr, btn.values[index]);
                 });
-                eBtn.innerHTML = oBtn.content;
-                if (oBtn.isExit) {
+                btnChild.innerHTML = btn.content;
+                if (btn.isExit) {
                     // Add event default
-                    eHeadingClose.addEventListener('click', () => {
+                    btnChild.addEventListener('click', () => {
                         this.closeDialog();
                     });
                 }
-            }
+            });
 
-            eContentMessage.innerHTML = _options.message;
+            eContentMessage.innerHTML = _formInfo.message;
+            _rootElement.action = _formData.value;
             _rootElement.classList.remove('hide');
         },
         closeDialog() {
-            this.createDialog(_data);
+            this.createDialog(_formInfo);
             _rootElement.action = '/';
             _rootElement.classList.add('hide');
         },
