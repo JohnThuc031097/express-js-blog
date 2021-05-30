@@ -306,9 +306,8 @@ const UserController = {
 
         await new CourseModel(course)
             .save()
-            .then((docSaved) => {
-                docSaved = doctumentToObject(docSaved);
-                res.redirect('back');
+            .then(() => {
+                res.redirect(`/user/${idUser}/courses/page/`);
             })
             .catch(next);
     },
@@ -341,27 +340,17 @@ const UserController = {
     // Soft delete (Remove)
     async courseRemove(req, res, next) {
         const idCourse = req.params?.idCourse;
-        CourseModel.deleteById(idCourse, (err, doc) => {
-            if (err) {
-                res.send(next);
-            } else {
-                console.log('[Push to Bin]: ', doc);
-                res.redirect('back');
-            }
-        });
+        CourseModel.deleteById(idCourse)
+            .then(() => res.redirect('back'))
+            .catch(next);
     },
     // [PUT]
     // Restore when after removed
     async courseRestore(req, res, next) {
         const idCourse = req.params?.idCourse;
-        CourseModel.restore({ _id: idCourse }, (err, result) => {
-            if (err) {
-                res.send(next);
-            } else {
-                console.log('[Restore form Bin]: ', result);
-                res.redirect('back');
-            }
-        });
+        CourseModel.restore({ _id: idCourse })
+            .then(() => res.redirect('back'))
+            .catch(next);
     },
 };
 

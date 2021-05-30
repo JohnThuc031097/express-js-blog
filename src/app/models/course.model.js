@@ -2,8 +2,9 @@ import mongoose from 'mongoose';
 import mongooseDelete from 'mongoose-delete';
 import slug from 'mongoose-slug-updater';
 
-const Schema = mongoose.Schema;
 mongoose.plugin(slug);
+
+const Schema = mongoose.Schema;
 
 const courseSchema = new Schema(
     {
@@ -16,10 +17,6 @@ const courseSchema = new Schema(
     },
     { timestamps: true },
 );
-courseSchema.plugin(mongooseDelete, {
-    overrideMethods: ['count', 'countDocuments', 'find'],
-    indexFields: 'all',
-});
 
 const courseLevelSchema = new Schema(
     {
@@ -28,6 +25,12 @@ const courseLevelSchema = new Schema(
     },
     { timestamps: true },
 );
+
+// Add plugin
+courseSchema.plugin(mongooseDelete, {
+    overrideMethods: 'all',
+    indexFields: 'all',
+});
 
 const CourseModel = mongoose.model('course', courseSchema);
 const CourseLevelModel = mongoose.model('course-level', courseLevelSchema);

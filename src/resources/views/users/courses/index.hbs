@@ -1,5 +1,12 @@
 <div class="col xl-max md-max container__courses-user">
     <div class="row container__courses-user-caption">Courses of me</div>
+    <div class="row xl-o-left md-o-left container__courses-user-controls">
+        <div class="col xl md-0_5"></div>
+        <a href="/user/{{idUser}}/courses/page/create"
+            class="col xl md-1_5 btn text-link container__courses-user-controls-create">Create New</a>
+        <a href="/user/{{idUser}}/courses/page/deleted"
+            class="col xl md-1_5 btn text-link container__courses-user-controls-trash">View Trash</a>
+    </div>
     <div class="row container__courses-user-heading">
         <span class="col xl-0_5 md-0_5 text-center container__courses-user-heading-item">#</span>
         <span class="col xl-3 md-2 container__courses-user-heading-item">Name</span>
@@ -20,22 +27,32 @@
             <a class="container__courses-user-table-item-child btn text-link"
                 href="/user/{{../idUser}}/courses/page/edit/{{this._id}}">Edit</a>
             <a class="container__courses-user-table-item-child btn text-link" onclick="frmDialogCourseRemove.showDialog(
-                {
-                    value: '/user/{{../idUser}}/courses/api/remove/{{this._id}}?_method=PUT',
-                    button: [
                         {
-                            tag: 'input',
-                            attrs: ['type', 'value'],
-                            values: ['submit', 'Có'],
-                        },
-                        {          
-                            tag: 'input',
-                            attrs: ['type', 'value'],
-                            values: ['button', 'Không'],
-                            isExit: true,
-                        },
-                    ]
-                })">Remove
+                            value: '/user/{{../idUser}}/courses/api/remove/{{this._id}}?_method=PUT',
+                            button: [
+                                {
+                                    tag: 'input',
+                                    attrs: ['type', 'value'],
+                                    values: ['submit', 'Có'],
+                                },
+                                {          
+                                    tag: 'input',
+                                    attrs: ['type', 'value'],
+                                    values: ['button', 'Không'],
+                                    isExit: true,
+                                },
+                            ]
+                        })">Remove
+            </a>
+        </div>
+    </div>
+    {{else}}
+    <div class="row container__courses-user-table-empty">
+        <div class="col xl-max md-max container__courses-user-table-empty-show-text">
+            Bạn chưa đăng khóa học nào.
+            <a class="btn text-link container__courses-user-table-empty-show-link"
+                href="/user/{{idUser}}/courses/page/create">
+                Create New
             </a>
         </div>
     </div>

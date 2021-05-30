@@ -54,6 +54,16 @@
             </a>
         </div>
     </div>
+    {{else}}
+    <div class="row container__courses-user-table-empty">
+        <div class="col xl-max md-max container__courses-user-table-empty-show-text">
+            Không có khóa học nào được xóa.
+            <a class="btn text-link container__courses-user-table-empty-show-link"
+                href="/user/{{idUser}}/courses/page/">
+                View Courses
+            </a>
+        </div>
+    </div>
     {{/each}}
     <div id="{{optionsDialog.style}}"></div>
     <form id="{{optionsDialog.selector}}" class="row hide" method="POST" action="/">
@@ -67,7 +77,7 @@
         frmDialogCourseDelete.createDialog({
             type: 'warn',
             title: 'Xóa khóa học',
-            message: 'Bạn thực sự muốn xóa khóa học này?',
+            message: 'Hành động này không thể khôi phục.Bạn vẫn muốn xóa khóa học này?',
         });
         const frmDialogCourseRestore = FormDialog();
         frmDialogCourseRestore.init(optionsDialog, cssRender);

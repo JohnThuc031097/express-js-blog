@@ -6,6 +6,23 @@
         text-transform: uppercase;
         margin-bottom: 15px;
     }
+    .container__courses-user-controls {
+        text-align: center;
+        margin-bottom: 10px;
+        .container__courses-user-controls-create,
+        .container__courses-user-controls-trash {
+            font-weight: 600;
+            border-radius: 5px;
+        }
+        .container__courses-user-controls-create {
+            background-color: rgb(240, 79, 30);
+            color: #fff;
+        }
+        .container__courses-user-controls-trash {
+            background-color: rgb(22, 134, 31);
+            color: #fff;
+        }
+    }
     .container__courses-user-heading {
         font-size: 18px;
         font-weight: 600;
@@ -50,5 +67,20 @@
         &:hover {
             background-color: rgba(224, 217, 217, 0.5);
         }
+    }
+}
+.container__courses-user-table-empty {
+    text-align: center;
+    margin-top: 20px;
+    .container__courses-user-table-empty-show-text {
+        font-size: 20px;
+        color: rgb(150, 149, 149);
+    }
+    .container__courses-user-table-empty-show-link {
+        background-color: rgb(245, 111, 22);
+        color: #fff;
+        font-weight: 600;
+        padding: 10px 10px;
+        border-radius: 5px;
     }
 }
