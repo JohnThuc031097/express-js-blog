@@ -14,11 +14,18 @@ const UserController = {
     async coursePageIndex(req, res, next) {
         const idUser = req.params?.idUser;
         let courses = [];
+        let coursesCount = 0;
+        let coursesDeletedCount = 0;
         await CourseModel.find({ author: idUser })
             .populate('author')
             .populate('level')
             .then((docs) => {
                 courses = doctumentsToObjects(docs);
+            })
+            .catch(next);
+        await CourseModel.countDocumentsDeleted({ author: idUser })
+            .then((countDeleted) => {
+                coursesDeletedCount = countDeleted;
             })
             .catch(next);
         let optionsDialog = {
@@ -124,6 +131,7 @@ const UserController = {
         res.render('users/courses/index', {
             idUser,
             courses,
+            coursesDeletedCount,
             cssRender,
             optionsDialog,
         });
@@ -339,10 +347,15 @@ const UserController = {
     // [PUT]
     // Soft delete (Remove)
     async courseRemove(req, res, next) {
-        const idCourse = req.params?.idCourse;
-        CourseModel.deleteById(idCourse)
-            .then(() => res.redirect('back'))
-            .catch(next);
+        const idCourses = (req.params?.idCourse).split(',');
+        if (idCourses.length > 0) {
+            idCourses.forEach(async (idCourse) => {
+                await CourseModel.deleteById(idCourse).catch(next);
+            });
+        } else {
+            await CourseModel.deleteById(idCourses).catch(next);
+        }
+        res.redirect('back');
     },
     // [PUT]
     // Restore when after removed
