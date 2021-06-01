@@ -78,4 +78,4 @@ const formatDate = function (timestamp) {
     return moment(timestamp).format('DD-MM-yyyy hh:mm:ss');
 };
 
-export { sum, isEven, compare, formatDate, json };
+export default { sum, isEven, compare, formatDate, json };

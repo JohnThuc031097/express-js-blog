@@ -14,7 +14,7 @@ import db from './config/db/index.js';
 // Routes
 import route from './routes/index.route.js';
 // Utils
-import { sum, isEven, compare, formatDate, json } from './util/handlbars.js';
+import helperHbs from './util/handlbars.js';
 import { sassRender } from './util/sass.js';
 import RootApp from './util/app.js';
 
@@ -46,13 +46,7 @@ if (await db.connect(RootApp.NameCollection())) {
             'hbs',
             handlebars({
                 extname: '.hbs',
-                helpers: {
-                    sum,
-                    isEven,
-                    json,
-                    compare,
-                    formatDate,
-                },
+                helpers: helperHbs,
             }),
         );
         app.set('view engine', 'hbs');
