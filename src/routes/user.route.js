@@ -26,15 +26,15 @@ UserRoute.get(
 UserRoute.post('/:idUser/courses/api', UserController['courseAdd']);
 UserRoute.put('/:idUser/courses/api/:idCourse', UserController['courseUpdate']);
 UserRoute.delete(
-    '/:idUser/courses/api/delete/:idCourse',
+    '/:idUser/courses/api/delete/:idCourses',
     UserController['courseDelete'],
 );
 UserRoute.put(
-    '/:idUser/courses/api/remove/:idCourse',
+    '/:idUser/courses/api/remove/:idCourses',
     UserController['courseRemove'],
 );
 UserRoute.put(
-    '/:idUser/courses/api/restore/:idCourse',
+    '/:idUser/courses/api/restore/:idCourses',
     UserController['courseRestore'],
 );
 

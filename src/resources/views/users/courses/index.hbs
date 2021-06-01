@@ -2,13 +2,15 @@
     <div class="row container__courses-user-caption">Courses of me</div>
     <div class="row xl-o-space-between md-o-space-between container__courses-user-controls">
         <div class="col xl-0_5 md-0_5"></div>
-        <button button-id="create" class="col xl md-1_5 btn text-link container__courses-user-controls-item">Create
+        <button button-id="create" class="col xl md-1_5 btn text-link container__courses-user-controls-create">Create
             New</button>
-        <button button-id="view-removed" class="col xl md-1_5 btn text-link container__courses-user-controls-item">
+        <button button-id="view-removed"
+            class="col xl md-1_5 btn text-link container__courses-user-controls-view-deleted">
             View Trash ({{coursesDeletedCount}})
         </button>
         <div class="col xl-8 md-2"></div>
-        <button button-id="remove-all" class="col xl md-1_5 btn text-link container__courses-user-controls-item">Remove
+        <button button-id="remove-all"
+            class="col xl md-1_5 btn text-link container__courses-user-controls-remove-all">Remove
             All
             (0)
         </button>
@@ -86,18 +88,18 @@
             message: 'Bạn thực sự muốn loại bỏ tất các khóa học đã lựa chọn này?',
         });
 
-        const _eBtnRemoves = _$$('button[button-data][button-id="remove"]');
-        const _eBtnRemovesAll = _$('button[button-id="remove-all"]');
-        const _eBtnEdits = _$$('button[button-data][button-id="edit"]');
-        const _eBtnCreates = _$$('button[button-id="create"]');
+        const _eBtnRemove = _$$('button[button-data][button-id="remove"]');
+        const _eBtnRemoveAll = _$('button[button-id="remove-all"]');
+        const _eBtnEdit = _$$('button[button-data][button-id="edit"]');
+        const _eBtnCreate = _$$('button[button-id="create"]');
         const _eBtnViewRemoved = _$$('button[button-id="view-removed"]');
-        const _eDivViews = _$$('div[div-data][div-id="view-detail"]');
+        const _eDivView = _$$('div[div-data][div-id="view-detail"]');
         const _eDisplayCountChecked = _$('#ckbAllCount');
         const _eChkAll = _$('input[type="checkbox"][id="ckbAll"]');
-        const _eChkItems = _$$('input[type="checkbox"][name="ckbItem"]');
+        const _eChkItem = _$$('input[type="checkbox"][name="ckbItem"]');
 
-        if (_eDivViews) {
-            _eDivViews.forEach(e => {
+        if (_eDivView) {
+            _eDivView.forEach(e => {
                 const idCourse = e.getAttribute('div-data');
                 e.addEventListener('click', () => {
                     location.href = `/user/{{idUser}}/courses/page/detail/${idCourse}`;
@@ -105,8 +107,8 @@
             })
         }
 
-        if (_eBtnCreates) {
-            _eBtnCreates.forEach(e => {
+        if (_eBtnCreate) {
+            _eBtnCreate.forEach(e => {
                 e.addEventListener('click', () => {
                     location.href = `/user/{{idUser}}/courses/page/create`;
                 });
@@ -121,8 +123,8 @@
             });
         }
 
-        if (_eBtnEdits) {
-            _eBtnEdits.forEach(e => {
+        if (_eBtnEdit) {
+            _eBtnEdit.forEach(e => {
                 const idCourse = e.getAttribute('button-data');
                 e.addEventListener('click', () => {
                     location.href = `/user/{{idUser}}/courses/page/edit/${idCourse}`;
@@ -130,8 +132,8 @@
             });
         }
 
-        if (_eBtnRemoves) {
-            _eBtnRemoves.forEach(e => {
+        if (_eBtnRemove) {
+            _eBtnRemove.forEach(e => {
                 const idCourse = e.getAttribute('button-data');
                 e.addEventListener('click', () => {
                     frmDialogCourseRemove.showDialog(
@@ -154,51 +156,52 @@
                 })
             })
         }
+        if (_eBtnRemoveAll) {
+            _eBtnRemoveAll.addEventListener('click', () => {
+                let idCourses = [..._eChkItem].reduce((totalId, element) => {
+                    if (element.checked) {
+                        totalId = [...totalId, element.getAttribute('input-data')];
+                    }
+                    return totalId;
+                }, []);
+                frmDialogCourseRemoveAll.showDialog(
+                    {
+                        value: `/user/{{idUser}}/courses/api/remove/${idCourses}?_method=PUT`,
+                        button: [
+                            {
+                                tag: 'input',
+                                attrs: ['type', 'value'],
+                                values: ['submit', 'Có'],
+                            },
+                            {
+                                tag: 'input',
+                                attrs: ['type', 'value'],
+                                values: ['button', 'Không'],
+                                isExit: true,
+                            },
+                        ]
+                    })
 
+            });
+        }
     </script>
     <script>
 
         if (_eChkAll) {
-            _eChkAll.addEventListener('click', () => {
-                if (_eChkItems) {
-                    _eChkItems.forEach(e => {
+            if (_eChkItem) {
+                _eChkItem.forEach(e => {
+                    e.addEventListener('click', () => {
                         e.checked = !e.checked;
-                        e.addEventListener('click', () => {
-                            e.checked = !e.checked;
-                            updateCountChecked();
-                        })
+                        updateCountChecked();
                     });
+                })
+            }
+            _eChkAll.addEventListener('click', () => {
+                if (_eChkItem) {
+                    _eChkItem.forEach(e => (e.checked = !e.checked));
                     updateCountChecked();
                 }
             });
-            if (_eBtnRemovesAll) {
-                _eBtnRemovesAll.addEventListener('click', () => {
-                    let idCourses = [..._eChkItems].reduce((totalId, element) => {
-                        if (element.checked) {
-                            totalId = [...totalId, element.getAttribute('input-data')];
-                        }
-                        return totalId;
-                    }, []);
-                    frmDialogCourseRemoveAll.showDialog(
-                        {
-                            value: `/user/{{idUser}}/courses/api/remove/${idCourses}?_method=PUT`,
-                            button: [
-                                {
-                                    tag: 'input',
-                                    attrs: ['type', 'value'],
-                                    values: ['submit', 'Có'],
-                                },
-                                {
-                                    tag: 'input',
-                                    attrs: ['type', 'value'],
-                                    values: ['button', 'Không'],
-                                    isExit: true,
-                                },
-                            ]
-                        })
-
-                });
-            }
         }
 
         const updateCountChecked = () => {
@@ -206,7 +209,7 @@
             if (eChkItemsChecked) {
                 if (_eDisplayCountChecked) {
                     _eDisplayCountChecked.innerHTML = `(${eChkItemsChecked.length})`;
-                    _eBtnRemovesAll.innerHTML = `Remove All (${eChkItemsChecked.length})`;
+                    _eBtnRemoveAll.innerHTML = `Remove All (${eChkItemsChecked.length})`;
                 }
             }
         }

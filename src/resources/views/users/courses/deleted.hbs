@@ -1,70 +1,63 @@
 <div class="col xl-max md-max container__courses-user">
     <div class="row container__courses-user-caption">Courses of me</div>
-    <div class="row xl-o-left md-o-left container__courses-user-controls">
-        <div class="col xl md-0_5"></div>
-        <a href="/user/{{idUser}}/courses/page"
-            class="col xl md-1_5 btn text-link container__courses-user-controls-create">View Courses</a>
+    <div class="row xl-o-space-between md-o-space-between container__courses-user-controls">
+        <div class="col xl-0_5 md-0_5"></div>
+        <button button-id="view-courses"
+            class="col xl md-1_5 btn text-link container__courses-user-controls-view-courses">View
+            Courses ({{coursesCount}})</button>
+        <div class="col xl-7 md-2"></div>
+        <button button-id="restore-all"
+            class="col xl md-1_5 btn text-link container__courses-user-controls-restore-all">Restore
+            All
+            (0)
+        </button>
+        <button button-id="delete-all"
+            class="col xl md-1_5 btn text-link container__courses-user-controls-delete-all">Delete
+            All
+            (0)
+        </button>
+        <div class="col xl-0_5 md-0_5"></div>
     </div>
     <div class="row container__courses-user-heading">
+        <span class="col xl-0_5 md-0_5 text-center container__courses-user-heading-item" id="ckbAllCount">(0)</span>
+        <span class="col xl-0_5 md-0_5 text-center container__courses-user-heading-item">
+            <input type="checkbox" id="ckbAll">
+        </span>
         <span class="col xl-0_5 md-0_5 text-center container__courses-user-heading-item">#</span>
-        <span class="col xl-3 md-2 container__courses-user-heading-item">Name</span>
-        <span class="col xl-4 md-2 container__courses-user-heading-item">Description</span>
+        <span class="col xl-3 md-1_5 container__courses-user-heading-item">Name</span>
+        <span class="col xl-4 md-1_5 container__courses-user-heading-item">Description</span>
         <span class="col xl md text-center container__courses-user-heading-item">Level</span>
         <span class="col xl md text-center container__courses-user-heading-item">Deleted At</span>
         <span class="col xl md text-center container__courses-user-heading-item">Controls</span>
     </div>
     {{#each courses}}
     <div class="row text-link container__courses-user-table{{#if (isEven @index)}}-light{{/if}}">
+        <span class="col xl-0_5 md-0_5 text-center container__courses-user-table-item"></span>
+        <span class="col xl-0_5 md-0_5 text-center container__courses-user-table-item">
+            <input input-data="{{this._id}}" type="checkbox" name="ckbItem">
+        </span>
         <div class="col xl-0_5 md-0_5 text-center container__courses-user-table-item">{{sum @index 1}}</div>
-        <a href="/user/{{../idUser}}/courses/page/detail/{{this._id}}"
-            class="col xl-3 md-2 text-link container__courses-user-table-item text-short">{{this.name}}</a>
-        <div class="col xl-4 md-2 container__courses-user-table-item text-short">{{this.description}}</div>
+        <div div-data="{{this._id}}" div-id="view-detail"
+            class="col xl-3 md-1_5 text-link container__courses-user-table-item text-short">{{this.name}}</div>
+        <div class="col xl-4 md-1_5 container__courses-user-table-item text-short">{{this.description}}</div>
         <div class="col xl md text-center container__courses-user-table-item">{{this.level.name}}</div>
         <div class="col xl md text-center container__courses-user-table-item">{{formatDate this.deletedAt}}</div>
         <div class="col xl md text-center container__courses-user-table-item--controls">
-            <a class="container__courses-user-table-item-child btn text-link" onclick="frmDialogCourseRestore.showDialog(
-                {
-                    value: '/user/{{../idUser}}/courses/api/restore/{{this._id}}?_method=PUT',
-                    button: [
-                        {
-                            tag: 'input',
-                            attrs: ['type', 'value'],
-                            values: ['submit', 'Có'],
-                        },
-                        {          
-                            tag: 'input',
-                            attrs: ['type', 'value'],
-                            values: ['button', 'Không'],
-                            isExit: true,
-                        },
-                    ]
-                })">Restore</a>
-            <a class="container__courses-user-table-item-child btn text-link" onclick="frmDialogCourseDelete.showDialog(
-                {
-                    value: '/user/{{../idUser}}/courses/api/delete/{{this._id}}?_method=DELETE',
-                    button: [
-                        {
-                            tag: 'input',
-                            attrs: ['type', 'value'],
-                            values: ['submit', 'Có'],
-                        },
-                        {          
-                            tag: 'input',
-                            attrs: ['type', 'value'],
-                            values: ['button', 'Không'],
-                            isExit: true,
-                        },
-                    ]
-                })">Delete
-            </a>
+            <button button-data="{{this._id}}" button-id="restore"
+                class="container__courses-user-table-item-child btn text-link">
+                Restore
+            </button>
+            <button button-data="{{this._id}}" button-id="delete"
+                class="container__courses-user-table-item-child btn text-link">
+                Delete
+            </button>
         </div>
     </div>
     {{else}}
     <div class="row container__courses-user-table-empty">
         <div class="col xl-max md-max container__courses-user-table-empty-show-text">
-            Không có khóa học nào được xóa.
-            <a class="btn text-link container__courses-user-table-empty-show-link"
-                href="/user/{{idUser}}/courses/page/">
+            Không có khóa học nào trong thùng rác.
+            <a class="btn text-link container__courses-user-table-empty-show-link" href="/user/{{idUser}}/courses/page">
                 View Courses
             </a>
         </div>
@@ -74,22 +67,205 @@
     <form id="{{optionsDialog.selector}}" class="row hide" method="POST" action="/">
     </form>
     <script>
+        const _$ = document.querySelector.bind(document);
+        const _$$ = document.querySelectorAll.bind(document);
+
         const cssRender = `{{{ cssRender }}}`;
         const optionsDialog = {{{ json optionsDialog }}};
+
+        const frmDialogCourseRestore = FormDialog();
+        frmDialogCourseRestore.init(optionsDialog, cssRender);
+        frmDialogCourseRestore.createDialog({
+            type: 'warn',
+            title: 'Khôi phục khóa học',
+            message: 'Bạn muốn khôi phục khóa học này?',
+        });
+
+        const frmDialogCourseRestoreAll = FormDialog();
+        frmDialogCourseRestoreAll.init(optionsDialog, cssRender);
+        frmDialogCourseRestoreAll.createDialog({
+            type: 'warn',
+            title: 'Khôi phục khóa học',
+            message: 'Bạn muốn khôi phục tất cả khóa học đã chọn?',
+        });
 
         const frmDialogCourseDelete = FormDialog();
         frmDialogCourseDelete.init(optionsDialog, cssRender);
         frmDialogCourseDelete.createDialog({
-            type: 'warn',
+            type: 'error',
             title: 'Xóa khóa học',
-            message: 'Hành động này <span style="color:red;">không thể khôi phục</span>. Bạn vẫn muốn xóa khóa học này?',
+            message: 'Hành động này <span style="color:red;">không thể khôi phục</span>. Bạn vẫn muốn xóa khóa học?',
         });
-        const frmDialogCourseRestore = FormDialog();
-        frmDialogCourseRestore.init(optionsDialog, cssRender);
-        frmDialogCourseRestore.createDialog({
-            type: 'info',
-            title: 'Khôi phục khóa học',
-            message: 'Bạn muốn khôi phục khóa học này?',
+
+        const frmDialogCourseDeleteAll = FormDialog();
+        frmDialogCourseDeleteAll.init(optionsDialog, cssRender);
+        frmDialogCourseDeleteAll.createDialog({
+            type: 'error',
+            title: 'Xóa khóa học',
+            message: 'Hành động này <span style="color:red;">không thể khôi phục</span>. Bạn vẫn muốn xóa tất cả khóa học đã chọn?',
         });
+
+        const _eBtnDelete = _$$('button[button-data][button-id="delete"]');
+        const _eBtnDeleteAll = _$('button[button-id="delete-all"]');
+        const _eBtnRestore = _$$('button[button-data][button-id="restore"]');
+        const _eBtnRestoreAll = _$('button[button-id="restore-all"]');
+        const _eBtnViewCourses = _$$('button[button-id="view-courses"]');
+        const _eDivViews = _$$('div[div-data][div-id="view-detail"]');
+        const _eDisplayCountChecked = _$('#ckbAllCount');
+        const _eChkAll = _$('input[type="checkbox"][id="ckbAll"]');
+        const _eChkItems = _$$('input[type="checkbox"][name="ckbItem"]');
+
+        if (_eDivViews) {
+            _eDivViews.forEach(e => {
+                const idCourse = e.getAttribute('div-data');
+                e.addEventListener('click', () => {
+                    location.href = `/user/{{idUser}}/courses/page/detail/${idCourse}`;
+                })
+            })
+        }
+
+        if (_eBtnViewCourses) {
+            _eBtnViewCourses.forEach(e => {
+                e.addEventListener('click', () => {
+                    location.href = `/user/{{idUser}}/courses/page`;
+                });
+            });
+        }
+
+        if (_eBtnDelete) {
+            _eBtnDelete.forEach(e => {
+                const idCourse = e.getAttribute('button-data');
+                e.addEventListener('click', () => {
+                    frmDialogCourseDelete.showDialog(
+                        {
+                            value: `/user/{{idUser}}/courses/api/delete/${idCourse}?_method=DELETE`,
+                            button: [
+                                {
+                                    tag: 'input',
+                                    attrs: ['type', 'value'],
+                                    values: ['submit', 'Có'],
+                                },
+                                {
+                                    tag: 'input',
+                                    attrs: ['type', 'value'],
+                                    values: ['button', 'Không'],
+                                    isExit: true,
+                                },
+                            ]
+                        })
+                })
+            })
+        }
+
+        if (_eBtnRestore) {
+            _eBtnRestore.forEach(e => {
+                const idCourse = e.getAttribute('button-data');
+                e.addEventListener('click', () => {
+                    frmDialogCourseRestore.showDialog(
+                        {
+                            value: `/user/{{idUser}}/courses/api/restore/${idCourse}?_method=PUT`,
+                            button: [
+                                {
+                                    tag: 'input',
+                                    attrs: ['type', 'value'],
+                                    values: ['submit', 'Có'],
+                                },
+                                {
+                                    tag: 'input',
+                                    attrs: ['type', 'value'],
+                                    values: ['button', 'Không'],
+                                    isExit: true,
+                                },
+                            ]
+                        });
+                })
+            })
+        }
+
+    </script>
+    <script>
+
+        if (_eChkAll) {
+            _eChkAll.addEventListener('click', () => {
+                if (_eChkItems) {
+                    _eChkItems.forEach(e => {
+                        e.checked = !e.checked;
+                        e.addEventListener('click', () => {
+                            e.checked = !e.checked;
+                            updateCountChecked();
+                        })
+                    });
+                    updateCountChecked();
+                }
+            });
+            if (_eBtnRestoreAll) {
+                _eBtnRestoreAll.addEventListener('click', () => {
+                    let idCourses = [..._eChkItems].reduce((totalId, element) => {
+                        if (element.checked) {
+                            totalId = [...totalId, element.getAttribute('input-data')];
+                        }
+                        return totalId;
+                    }, []);
+                    frmDialogCourseRestoreAll.showDialog(
+                        {
+                            value: `/user/{{idUser}}/courses/api/restore/${idCourses}?_method=PUT`,
+                            button: [
+                                {
+                                    tag: 'input',
+                                    attrs: ['type', 'value'],
+                                    values: ['submit', 'Có'],
+                                },
+                                {
+                                    tag: 'input',
+                                    attrs: ['type', 'value'],
+                                    values: ['button', 'Không'],
+                                    isExit: true,
+                                },
+                            ]
+                        })
+
+                });
+            }
+            if (_eBtnDeleteAll) {
+                _eBtnDeleteAll.addEventListener('click', () => {
+                    let idCourses = [..._eChkItems].reduce((totalId, element) => {
+                        if (element.checked) {
+                            totalId = [...totalId, element.getAttribute('input-data')];
+                        }
+                        return totalId;
+                    }, []);
+                    frmDialogCourseDeleteAll.showDialog(
+                        {
+                            value: `/user/{{idUser}}/courses/api/delete/${idCourses}?_method=DELETE`,
+                            button: [
+                                {
+                                    tag: 'input',
+                                    attrs: ['type', 'value'],
+                                    values: ['submit', 'Có'],
+                                },
+                                {
+                                    tag: 'input',
+                                    attrs: ['type', 'value'],
+                                    values: ['button', 'Không'],
+                                    isExit: true,
+                                },
+                            ]
+                        })
+
+                });
+            }
+        }
+
+        const updateCountChecked = () => {
+            const eChkItemsChecked = _$$('input[type="checkbox"][name="ckbItem"]:checked');
+            if (eChkItemsChecked) {
+                if (_eDisplayCountChecked) {
+                    _eDisplayCountChecked.innerHTML = `(${eChkItemsChecked.length})`;
+                    _eBtnRestoreAll.innerHTML = `Restore All (${eChkItemsChecked.length})`;
+                    _eBtnDeleteAll.innerHTML = `Delete All (${eChkItemsChecked.length})`;
+                }
+            }
+        }
+
     </script>
 </div>

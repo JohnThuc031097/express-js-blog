@@ -14,7 +14,6 @@ const UserController = {
     async coursePageIndex(req, res, next) {
         const idUser = req.params?.idUser;
         let courses = [];
-        let coursesCount = 0;
         let coursesDeletedCount = 0;
         await CourseModel.find({ author: idUser })
             .populate('author')
@@ -140,11 +139,17 @@ const UserController = {
     async coursePageDeleted(req, res, next) {
         const idUser = req.params?.idUser;
         let courses = [];
+        let coursesCount = 0;
         await CourseModel.findDeleted({ author: idUser })
             .populate('author')
             .populate('level')
             .then((docs) => {
                 courses = doctumentsToObjects(docs);
+            })
+            .catch(next);
+        await CourseModel.countDocuments({ author: idUser })
+            .then((count) => {
+                coursesCount = count;
             })
             .catch(next);
         let optionsDialog = {
@@ -250,6 +255,7 @@ const UserController = {
         res.render('users/courses/deleted', {
             idUser,
             courses,
+            coursesCount,
             cssRender,
             optionsDialog,
         });
@@ -336,18 +342,23 @@ const UserController = {
     },
     // [DELETE]
     // Force delete
+    // /:idUser/courses/api/delete/:idCourses
     async courseDelete(req, res, next) {
-        const idCourse = req.params?.idCourse;
-        await CourseModel.findByIdAndDelete(idCourse)
-            .then(() => {
-                res.redirect('back');
-            })
-            .catch(next);
+        const idCourses = (req.params?.idCourses).split(',');
+        if (idCourses.length > 0) {
+            idCourses.forEach(async (idCourse) => {
+                await CourseModel.findByIdAndDelete(idCourse).catch(next);
+            });
+        } else {
+            await CourseModel.findByIdAndDelete(idCourses).catch(next);
+        }
+        res.redirect('back');
     },
     // [PUT]
     // Soft delete (Remove)
+    // /:idUser/courses/api/remove/:idCourses
     async courseRemove(req, res, next) {
-        const idCourses = (req.params?.idCourse).split(',');
+        const idCourses = (req.params?.idCourses).split(',');
         if (idCourses.length > 0) {
             idCourses.forEach(async (idCourse) => {
                 await CourseModel.deleteById(idCourse).catch(next);
@@ -359,11 +370,17 @@ const UserController = {
     },
     // [PUT]
     // Restore when after removed
+    // /:idUser/courses/api/restore/:idCourses
     async courseRestore(req, res, next) {
-        const idCourse = req.params?.idCourse;
-        CourseModel.restore({ _id: idCourse })
-            .then(() => res.redirect('back'))
-            .catch(next);
+        const idCourses = (req.params?.idCourses).split(',');
+        if (idCourses.length > 0) {
+            idCourses.forEach(async (idCourse) => {
+                await CourseModel.restore({ _id: idCourse }).catch(next);
+            });
+        } else {
+            await CourseModel.restore({ _id: idCourse }).catch(next);
+        }
+        res.redirect('back');
     },
 };
 
