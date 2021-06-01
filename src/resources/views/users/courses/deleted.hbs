@@ -6,6 +6,7 @@
             class="col xl md-1_5 btn text-link container__courses-user-controls-view-courses">View
             Courses ({{coursesCount}})</button>
         <div class="col xl-7 md-2"></div>
+        {{#if courses}}
         <button button-id="restore-all"
             class="col xl md-1_5 btn text-link container__courses-user-controls-restore-all">Restore
             All
@@ -16,6 +17,10 @@
             All
             (0)
         </button>
+        {{else}}
+        <div class="col xl md-1_5"></div>
+        <div class="col xl md-1_5"></div>
+        {{/if}}
         <div class="col xl-0_5 md-0_5"></div>
     </div>
     <div class="row container__courses-user-heading">
@@ -110,13 +115,14 @@
         const _eBtnRestore = _$$('button[button-data][button-id="restore"]');
         const _eBtnRestoreAll = _$('button[button-id="restore-all"]');
         const _eBtnViewCourses = _$$('button[button-id="view-courses"]');
-        const _eDivViews = _$$('div[div-data][div-id="view-detail"]');
+        const _eDivView = _$$('div[div-data][div-id="view-detail"]');
         const _eDisplayCountChecked = _$('#ckbAllCount');
         const _eChkAll = _$('input[type="checkbox"][id="ckbAll"]');
-        const _eChkItems = _$$('input[type="checkbox"][name="ckbItem"]');
+        const _eChkItem = _$$('input[type="checkbox"][name="ckbItem"]');
+        const _selectorChkItemsChecked = 'input[type="checkbox"][name="ckbItem"]:checked';
 
-        if (_eDivViews) {
-            _eDivViews.forEach(e => {
+        if (_eDivView) {
+            _eDivView.forEach(e => {
                 const idCourse = e.getAttribute('div-data');
                 e.addEventListener('click', () => {
                     location.href = `/user/{{idUser}}/courses/page/detail/${idCourse}`;
@@ -182,25 +188,11 @@
             })
         }
 
-    </script>
-    <script>
-
-        if (_eChkAll) {
-            _eChkAll.addEventListener('click', () => {
-                if (_eChkItems) {
-                    _eChkItems.forEach(e => {
-                        e.checked = !e.checked;
-                        e.addEventListener('click', () => {
-                            e.checked = !e.checked;
-                            updateCountChecked();
-                        })
-                    });
-                    updateCountChecked();
-                }
-            });
-            if (_eBtnRestoreAll) {
-                _eBtnRestoreAll.addEventListener('click', () => {
-                    let idCourses = [..._eChkItems].reduce((totalId, element) => {
+        if (_eBtnRestoreAll) {
+            _eBtnRestoreAll.addEventListener('click', () => {
+                const eChkItemsChecked = _$$(_selectorChkItemsChecked);
+                if (eChkItemsChecked.length > 0) {
+                    let idCourses = [..._eChkItem].reduce((totalId, element) => {
                         if (element.checked) {
                             totalId = [...totalId, element.getAttribute('input-data')];
                         }
@@ -223,12 +215,14 @@
                                 },
                             ]
                         })
-
-                });
-            }
-            if (_eBtnDeleteAll) {
-                _eBtnDeleteAll.addEventListener('click', () => {
-                    let idCourses = [..._eChkItems].reduce((totalId, element) => {
+                }
+            });
+        }
+        if (_eBtnDeleteAll) {
+            _eBtnDeleteAll.addEventListener('click', () => {
+                const eChkItemsChecked = _$$(_selectorChkItemsChecked);
+                if (eChkItemsChecked.length > 0) {
+                    let idCourses = [..._eChkItem].reduce((totalId, element) => {
                         if (element.checked) {
                             totalId = [...totalId, element.getAttribute('input-data')];
                         }
@@ -251,13 +245,38 @@
                                 },
                             ]
                         })
+                }
+            });
+        }
 
-                });
+    </script>
+    <script>
+
+        if (_eChkAll) {
+
+            if (_eChkItem) {
+                _eChkItem.forEach(e => {
+                    e.addEventListener('click', () => {
+                        let isCheck = true;
+                        if (!e.checked) isCheck = false;
+                        e.checked = isCheck;
+                        updateCountChecked();
+                    });
+                })
             }
+
+            _eChkAll.addEventListener('click', () => {
+                let isCheck = true;
+                if (!_eChkAll.checked) isCheck = false;
+                if (_eChkItem) {
+                    _eChkItem.forEach(e => (e.checked = isCheck));
+                    updateCountChecked();
+                }
+            });
         }
 
         const updateCountChecked = () => {
-            const eChkItemsChecked = _$$('input[type="checkbox"][name="ckbItem"]:checked');
+            const eChkItemsChecked = _$$(_selectorChkItemsChecked);
             if (eChkItemsChecked) {
                 if (_eDisplayCountChecked) {
                     _eDisplayCountChecked.innerHTML = `(${eChkItemsChecked.length})`;

@@ -97,6 +97,7 @@
         const _eDisplayCountChecked = _$('#ckbAllCount');
         const _eChkAll = _$('input[type="checkbox"][id="ckbAll"]');
         const _eChkItem = _$$('input[type="checkbox"][name="ckbItem"]');
+        const _selectorChkItemsChecked = 'input[type="checkbox"][name="ckbItem"]:checked';
 
         if (_eDivView) {
             _eDivView.forEach(e => {
@@ -158,54 +159,62 @@
         }
         if (_eBtnRemoveAll) {
             _eBtnRemoveAll.addEventListener('click', () => {
-                let idCourses = [..._eChkItem].reduce((totalId, element) => {
-                    if (element.checked) {
-                        totalId = [...totalId, element.getAttribute('input-data')];
-                    }
-                    return totalId;
-                }, []);
-                frmDialogCourseRemoveAll.showDialog(
-                    {
-                        value: `/user/{{idUser}}/courses/api/remove/${idCourses}?_method=PUT`,
-                        button: [
-                            {
-                                tag: 'input',
-                                attrs: ['type', 'value'],
-                                values: ['submit', 'Có'],
-                            },
-                            {
-                                tag: 'input',
-                                attrs: ['type', 'value'],
-                                values: ['button', 'Không'],
-                                isExit: true,
-                            },
-                        ]
-                    })
-
+                const eChkItemsChecked = _$$(_selectorChkItemsChecked);
+                if (eChkItemsChecked.length > 0) {
+                    let idCourses = [..._eChkItem].reduce((totalId, element) => {
+                        if (element.checked) {
+                            totalId = [...totalId, element.getAttribute('input-data')];
+                        }
+                        return totalId;
+                    }, []);
+                    frmDialogCourseRemoveAll.showDialog(
+                        {
+                            value: `/user/{{idUser}}/courses/api/remove/${idCourses}?_method=PUT`,
+                            button: [
+                                {
+                                    tag: 'input',
+                                    attrs: ['type', 'value'],
+                                    values: ['submit', 'Có'],
+                                },
+                                {
+                                    tag: 'input',
+                                    attrs: ['type', 'value'],
+                                    values: ['button', 'Không'],
+                                    isExit: true,
+                                },
+                            ]
+                        })
+                }
             });
         }
     </script>
     <script>
 
         if (_eChkAll) {
+
             if (_eChkItem) {
                 _eChkItem.forEach(e => {
                     e.addEventListener('click', () => {
-                        e.checked = !e.checked;
+                        let isCheck = true;
+                        if (!e.checked) isCheck = false;
+                        e.checked = isCheck;
                         updateCountChecked();
                     });
                 })
             }
+
             _eChkAll.addEventListener('click', () => {
+                let isCheck = true;
+                if (!_eChkAll.checked) isCheck = false;
                 if (_eChkItem) {
-                    _eChkItem.forEach(e => (e.checked = !e.checked));
+                    _eChkItem.forEach(e => (e.checked = isCheck));
                     updateCountChecked();
                 }
             });
         }
 
         const updateCountChecked = () => {
-            const eChkItemsChecked = _$$('input[type="checkbox"][name="ckbItem"]:checked');
+            const eChkItemsChecked = _$$(_selectorChkItemsChecked);
             if (eChkItemsChecked) {
                 if (_eDisplayCountChecked) {
                     _eDisplayCountChecked.innerHTML = `(${eChkItemsChecked.length})`;
