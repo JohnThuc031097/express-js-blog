@@ -15,9 +15,14 @@ const UserController = {
         const idUser = req.params?.idUser;
         let courses = [];
         let coursesDeletedCount = 0;
+        let querySort = {};
+        if (res.locals._sort.enable) {
+            querySort[`${res.locals._sort.column}`] = res.locals._sort.type;
+        }
         await CourseModel.find({ author: idUser })
             .populate('author')
             .populate('level')
+            .sort(querySort)
             .then((docs) => {
                 courses = doctumentsToObjects(docs);
             })

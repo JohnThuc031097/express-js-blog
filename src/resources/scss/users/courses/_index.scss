@@ -37,10 +37,34 @@
         }
     }
     .container__courses-user-heading {
-        font-size: 18px;
-        font-weight: 600;
         .container__courses-user-heading-item {
+            display: flex;
+            justify-content: space-between;
+            font-size: 18px;
+            font-weight: 600;
             border-bottom: 2.5px solid #000;
+            cursor: pointer;
+            &.center {
+                justify-content: center;
+            }
+
+            .container__courses-user-heading-item-icon {
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                a {
+                    color: #000;
+                    text-decoration: none;
+                    font-size: 24px;
+                    line-height: 0.4;
+                    &:hover {
+                        color: red;
+                    }
+                    &.active {
+                        color: red;
+                    }
+                }
+            }
         }
     }
     .container__courses-user-table-light {
@@ -59,19 +83,18 @@
             font-size: 16px;
         }
         .container__courses-user-table-item--controls {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
             .container__courses-user-table-item-child {
-                color: #fff;
-                font-size: 12px;
-                font-weight: 600;
-                text-transform: uppercase;
-                width: 100%;
-                &:nth-child(1) {
+                button {
+                    color: #fff;
+                    font-size: 12px;
+                    font-weight: 600;
+                    text-transform: uppercase;
+                    width: 100%;
+                }
+                &:nth-child(1) button {
                     background-color: rgb(77, 77, 255);
                 }
-                &:nth-child(2) {
+                &:nth-child(2) button {
                     background-color: rgb(240, 79, 30);
                 }
             }

@@ -1,54 +1,79 @@
 <div class="col xl-max md-max container__courses-user">
     <div class="row container__courses-user-caption">Courses of me</div>
     <div class="row xl-o-space-between md-o-space-between container__courses-user-controls">
-        <div class="col xl-0_5 md-0_5"></div>
+        <div class="col xl md-0_5"></div>
         <button button-id="create" class="col xl md-1_5 btn text-link container__courses-user-controls-create">Create
             New</button>
         <button button-id="view-removed"
             class="col xl md-1_5 btn text-link container__courses-user-controls-view-deleted">
             View Trash ({{coursesDeletedCount}})
         </button>
-        <div class="col xl-8 md-2"></div>
+        <div class="col xl-7 md-2"></div>
         <button button-id="remove-all"
             class="col xl md-1_5 btn text-link container__courses-user-controls-remove-all">Remove
             All
             (0)
         </button>
-        <div class="col xl-0_5 md-0_5"></div>
+        <div class="col xl md-0_5"></div>
     </div>
     <div class="row container__courses-user-heading">
-        <span class="col xl-0_5 md-0_5 text-center container__courses-user-heading-item" id="ckbAllCount">(0)</span>
-        <span class="col xl-0_5 md-0_5 text-center container__courses-user-heading-item">
-            <input type="checkbox" id="ckbAll">
-        </span>
-        <span class="col xl-0_5 md-0_5 text-center container__courses-user-heading-item">#</span>
-        <span class="col xl-3 md-1_5 container__courses-user-heading-item">Name</span>
-        <span class="col xl-4 md-1_5 container__courses-user-heading-item">Description</span>
-        <span class="col xl md text-center container__courses-user-heading-item">Level</span>
-        <span class="col xl md text-center container__courses-user-heading-item">Created At</span>
-        <span class="col xl md text-center container__courses-user-heading-item">Controls</span>
+        <div class="col xl-0_5 md-0_5 text-center container__courses-user-heading-item center">
+            <div class="container__courses-user-heading-item-text">
+                <input type="checkbox" id="ckbAll">
+            </div>
+        </div>
+        <div class="col xl-0_5 md-0_5 text-center container__courses-user-heading-item">
+            <span class="container__courses-user-heading-item-text">#</span>
+            <div class="container__courses-user-heading-item-icon">
+                {{{sortable 'index' _sort}}}
+            </div>
+        </div>
+        <div class="col xl-4 md-2_5 container__courses-user-heading-item">
+            <span class="text-center container__courses-user-heading-item-text">Name</span>
+            <div class="container__courses-user-heading-item-icon">
+                {{{sortable 'name' _sort}}}
+            </div>
+        </div>
+        <div class="col xl md text-center container__courses-user-heading-item">
+            <span class="text-center container__courses-user-heading-item-text">Level</span>
+            <div class="container__courses-user-heading-item-icon">
+                {{{sortable 'level' _sort}}}
+            </div>
+        </div>
+        <div class="col xl-2 md-1_5 text-center container__courses-user-heading-item">
+            <span class="text-center container__courses-user-heading-item-text">Created At</span>
+            <div class="container__courses-user-heading-item-icon">
+                {{{sortable 'createdAt' _sort}}}
+            </div>
+        </div>
+        <div class="col xl-2 md text-center container__courses-user-heading-item">
+            <span class="text-center container__courses-user-heading-item-text">Controls</span>
+        </div>
     </div>
     {{#each courses}}
-    <div class="row text-link container__courses-user-table{{#if (isEven @index)}}-light{{/if}}">
-        <span class="col xl-0_5 md-0_5 text-center container__courses-user-table-item"></span>
-        <span class="col xl-0_5 md-0_5 text-center container__courses-user-table-item">
+    <div class="row xl-wrap text-link container__courses-user-table{{#if (isEven @index)}}-light{{/if}}">
+        <div class="col xl-0_5 md-0_5 text-center container__courses-user-table-item">
             <input input-data="{{this._id}}" type="checkbox" name="ckbItem">
-        </span>
+        </div>
         <div class="col xl-0_5 md-0_5 text-center container__courses-user-table-item">{{sum @index 1}}</div>
         <div div-data="{{this._id}}" div-id="view-detail"
-            class="col xl-3 md-1_5 text-link container__courses-user-table-item text-short">{{this.name}}</div>
-        <div class="col xl-4 md-1_5 container__courses-user-table-item text-short">{{this.description}}</div>
-        <div class="col xl md text-center container__courses-user-table-item">{{this.level.name}}</div>
-        <div class="col xl md text-center container__courses-user-table-item">{{formatDate this.createdAt}}</div>
-        <div class="col xl md text-center container__courses-user-table-item--controls">
-            <button button-data="{{this._id}}" button-id="edit"
-                class="container__courses-user-table-item-child btn text-link">
-                Edit
-            </button>
-            <button button-data="{{this._id}}" button-id="remove"
-                class="container__courses-user-table-item-child btn text-link">
-                Remove
-            </button>
+            class="col xl-4 md-2_5 text-link container__courses-user-table-item text-short">{{this.name}}</div>
+        <div class="col xl md container__courses-user-table-item">{{this.level.name}}</div>
+        <div class="col xl-2 md-1_5 container__courses-user-table-item">{{formatDate this.createdAt}}</div>
+        <div class="col xl-2 md text-center container__courses-user-table-item--controls">
+            <div class="row xl-wrap md-wrap">
+                <div class="col xl-6 md-max container__courses-user-table-item-child">
+                    <button button-data="{{this._id}}" button-id="edit" class="btn">
+                        Edit
+                    </button>
+                </div>
+                <div class="col xl-6 md-max container__courses-user-table-item-child">
+                    <button button-data="{{this._id}}" button-id="remove" class="btn">
+                        Remove
+                    </button>
+
+                </div>
+            </div>
         </div>
     </div>
     {{else}}
@@ -94,7 +119,6 @@
         const _eBtnCreate = _$$('button[button-id="create"]');
         const _eBtnViewRemoved = _$$('button[button-id="view-removed"]');
         const _eDivView = _$$('div[div-data][div-id="view-detail"]');
-        const _eDisplayCountChecked = _$('#ckbAllCount');
         const _eChkAll = _$('input[type="checkbox"][id="ckbAll"]');
         const _eChkItem = _$$('input[type="checkbox"][name="ckbItem"]');
         const _selectorChkItemsChecked = 'input[type="checkbox"][name="ckbItem"]:checked';
@@ -191,7 +215,6 @@
     <script>
 
         if (_eChkAll) {
-
             if (_eChkItem) {
                 _eChkItem.forEach(e => {
                     e.addEventListener('click', () => {
@@ -216,10 +239,7 @@
         const updateCountChecked = () => {
             const eChkItemsChecked = _$$(_selectorChkItemsChecked);
             if (eChkItemsChecked) {
-                if (_eDisplayCountChecked) {
-                    _eDisplayCountChecked.innerHTML = `(${eChkItemsChecked.length})`;
-                    _eBtnRemoveAll.innerHTML = `Remove All (${eChkItemsChecked.length})`;
-                }
+                _eBtnRemoveAll.innerHTML = `Remove All (${eChkItemsChecked.length})`;
             }
         }
 

@@ -78,4 +78,24 @@ const formatDate = function (timestamp) {
     return moment(timestamp).format('DD-MM-yyyy hh:mm:ss');
 };
 
-export default { sum, isEven, compare, formatDate, json };
+const sortable = function (column, data) {
+    let isActive = {
+        asc: '',
+        desc: '',
+    };
+    if (data.column === column) {
+        isActive[data.type] = 'active';
+    }
+    return /*html*/ `
+        <a href="?_sort&column=${column}&type=asc"
+            class="material-icons-outlined ${isActive['asc']}">
+            arrow_drop_up
+        </a>
+        <a href="?_sort&column=${column}&type=desc"
+            class="material-icons-outlined ${isActive['desc']}">
+            arrow_drop_down
+        </a>
+    `;
+};
+
+export default { sortable, sum, isEven, compare, formatDate, json };

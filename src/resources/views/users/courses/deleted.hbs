@@ -1,7 +1,7 @@
 <div class="col xl-max md-max container__courses-user">
     <div class="row container__courses-user-caption">Courses of me</div>
     <div class="row xl-o-space-between md-o-space-between container__courses-user-controls">
-        <div class="col xl-0_5 md-0_5"></div>
+        <div class="col xl md-0_5"></div>
         <button button-id="view-courses"
             class="col xl md-1_5 btn text-link container__courses-user-controls-view-courses">View
             Courses ({{coursesCount}})</button>
@@ -21,41 +21,94 @@
         <div class="col xl md-1_5"></div>
         <div class="col xl md-1_5"></div>
         {{/if}}
-        <div class="col xl-0_5 md-0_5"></div>
+        <div class="col xl md-0_5"></div>
     </div>
     <div class="row container__courses-user-heading">
-        <span class="col xl-0_5 md-0_5 text-center container__courses-user-heading-item" id="ckbAllCount">(0)</span>
-        <span class="col xl-0_5 md-0_5 text-center container__courses-user-heading-item">
-            <input type="checkbox" id="ckbAll">
-        </span>
-        <span class="col xl-0_5 md-0_5 text-center container__courses-user-heading-item">#</span>
-        <span class="col xl-3 md-1_5 container__courses-user-heading-item">Name</span>
-        <span class="col xl-4 md-1_5 container__courses-user-heading-item">Description</span>
-        <span class="col xl md text-center container__courses-user-heading-item">Level</span>
-        <span class="col xl md text-center container__courses-user-heading-item">Deleted At</span>
-        <span class="col xl md text-center container__courses-user-heading-item">Controls</span>
+        <div class="col xl-0_5 md-0_5 text-center container__courses-user-heading-item center">
+            <div class="container__courses-user-heading-item-text">
+                <input type="checkbox" id="ckbAll">
+            </div>
+        </div>
+        <div class="col xl-0_5 md-0_5 text-center container__courses-user-heading-item">
+            <span class="container__courses-user-heading-item-text">#</span>
+            <div class="container__courses-user-heading-item-icon">
+                <span class="material-icons-outlined">
+                    arrow_drop_up
+                </span>
+                <span class="material-icons-outlined">
+                    arrow_drop_down
+                </span>
+            </div>
+        </div>
+        <div class="col xl-4 md-2_5 container__courses-user-heading-item">
+            <span class="text-center container__courses-user-heading-item-text">Name</span>
+            <div class="container__courses-user-heading-item-icon">
+                <span class="material-icons-outlined">
+                    arrow_drop_up
+                </span>
+                <span class="material-icons-outlined">
+                    arrow_drop_down
+                </span>
+            </div>
+        </div>
+        <div class="col xl md text-center container__courses-user-heading-item">
+            <span class="text-center container__courses-user-heading-item-text">Level</span>
+            <div class="container__courses-user-heading-item-icon">
+                <span class="material-icons-outlined">
+                    arrow_drop_up
+                </span>
+                <span class="material-icons-outlined">
+                    arrow_drop_down
+                </span>
+            </div>
+        </div>
+        <div class="col xl-2 md-1_5 text-center container__courses-user-heading-item">
+            <span class="text-center container__courses-user-heading-item-text">Deleted At</span>
+            <div class="container__courses-user-heading-item-icon">
+                <span class="material-icons-outlined">
+                    arrow_drop_up
+                </span>
+                <span class="material-icons-outlined">
+                    arrow_drop_down
+                </span>
+            </div>
+        </div>
+        <div class="col xl-2 md text-center container__courses-user-heading-item">
+            <span class="text-center container__courses-user-heading-item-text">Controls</span>
+            <div class="container__courses-user-heading-item-icon">
+                <span class="material-icons-outlined">
+                    arrow_drop_up
+                </span>
+                <span class="material-icons-outlined">
+                    arrow_drop_down
+                </span>
+            </div>
+        </div>
     </div>
     {{#each courses}}
     <div class="row text-link container__courses-user-table{{#if (isEven @index)}}-light{{/if}}">
-        <span class="col xl-0_5 md-0_5 text-center container__courses-user-table-item"></span>
-        <span class="col xl-0_5 md-0_5 text-center container__courses-user-table-item">
+        <div class="col xl-0_5 md-0_5 text-center container__courses-user-table-item">
             <input input-data="{{this._id}}" type="checkbox" name="ckbItem">
-        </span>
+        </div>
         <div class="col xl-0_5 md-0_5 text-center container__courses-user-table-item">{{sum @index 1}}</div>
         <div div-data="{{this._id}}" div-id="view-detail"
-            class="col xl-3 md-1_5 text-link container__courses-user-table-item text-short">{{this.name}}</div>
-        <div class="col xl-4 md-1_5 container__courses-user-table-item text-short">{{this.description}}</div>
-        <div class="col xl md text-center container__courses-user-table-item">{{this.level.name}}</div>
-        <div class="col xl md text-center container__courses-user-table-item">{{formatDate this.deletedAt}}</div>
+            class="col xl-4 md-2_5 text-link container__courses-user-table-item text-short">{{this.name}}</div>
+        <div class="col xl md container__courses-user-table-item">{{this.level.name}}</div>
+        <div class="col xl-2 md-1_5 container__courses-user-table-item">{{formatDate this.createdAt}}</div>
         <div class="col xl md text-center container__courses-user-table-item--controls">
-            <button button-data="{{this._id}}" button-id="restore"
-                class="container__courses-user-table-item-child btn text-link">
-                Restore
-            </button>
-            <button button-data="{{this._id}}" button-id="delete"
-                class="container__courses-user-table-item-child btn text-link">
-                Delete
-            </button>
+            <div class="row xl-wrap md-wrap">
+                <div class="col xl-6 md-max container__courses-user-table-item-child">
+                    <button button-data="{{this._id}}" button-id="restore" class="btn">
+                        Restore
+                    </button>
+                </div>
+                <div class="col xl-6 md-max container__courses-user-table-item-child">
+                    <button button-data="{{this._id}}" button-id="delete" class="btn">
+                        Delete
+                    </button>
+
+                </div>
+            </div>
         </div>
     </div>
     {{else}}
@@ -116,7 +169,6 @@
         const _eBtnRestoreAll = _$('button[button-id="restore-all"]');
         const _eBtnViewCourses = _$$('button[button-id="view-courses"]');
         const _eDivView = _$$('div[div-data][div-id="view-detail"]');
-        const _eDisplayCountChecked = _$('#ckbAllCount');
         const _eChkAll = _$('input[type="checkbox"][id="ckbAll"]');
         const _eChkItem = _$$('input[type="checkbox"][name="ckbItem"]');
         const _selectorChkItemsChecked = 'input[type="checkbox"][name="ckbItem"]:checked';
@@ -278,11 +330,8 @@
         const updateCountChecked = () => {
             const eChkItemsChecked = _$$(_selectorChkItemsChecked);
             if (eChkItemsChecked) {
-                if (_eDisplayCountChecked) {
-                    _eDisplayCountChecked.innerHTML = `(${eChkItemsChecked.length})`;
-                    _eBtnRestoreAll.innerHTML = `Restore All (${eChkItemsChecked.length})`;
-                    _eBtnDeleteAll.innerHTML = `Delete All (${eChkItemsChecked.length})`;
-                }
+                _eBtnRestoreAll.innerHTML = `Restore All (${eChkItemsChecked.length})`;
+                _eBtnDeleteAll.innerHTML = `Delete All (${eChkItemsChecked.length})`;
             }
         }
 

@@ -11,6 +11,8 @@ import morgan from 'morgan';
 import methodOverride from 'method-override';
 // Configs
 import db from './config/db/index.js';
+// Midlewares
+// import SortMidleware from "./app/midlewares/sort.midleware.js";
 // Routes
 import route from './routes/index.route.js';
 // Utils
@@ -40,6 +42,7 @@ if (await db.connect(RootApp.NameCollection())) {
         app.use(express.urlencoded({ extended: true }));
         app.use(express.json());
         app.use(methodOverride('_method'));
+        // app.use(SortMidleware);
 
         // Template Handlebars
         app.engine(
