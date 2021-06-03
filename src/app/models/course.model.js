@@ -36,7 +36,7 @@ courseSchema.plugin(mongooseDelete, {
     indexFields: 'all',
 });
 courseSchema.plugin(_AutoIncrement, {
-    id: 'index_counter',
+    id: 'index_course',
     inc_field: 'index',
 });
 

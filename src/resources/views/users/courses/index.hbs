@@ -23,7 +23,7 @@
             </div>
         </div>
         <div class="col xl-0_5 md-0_5 text-center container__courses-user-heading-item">
-            <span class="container__courses-user-heading-item-text">#</span>
+            <span class="container__courses-user-heading-item-text">ID</span>
             <div class="container__courses-user-heading-item-icon">
                 {{{sortable 'index' _sort}}}
             </div>
@@ -55,7 +55,8 @@
         <div class="col xl-0_5 md-0_5 text-center container__courses-user-table-item">
             <input input-data="{{this._id}}" type="checkbox" name="ckbItem">
         </div>
-        <div class="col xl-0_5 md-0_5 text-center container__courses-user-table-item">{{sum @index 1}}</div>
+        {{!-- <div class="col xl-0_5 md-0_5 text-center container__courses-user-table-item">{{sum @index 1}}</div> --}}
+        <div class="col xl-0_5 md-0_5 text-center container__courses-user-table-item">{{this.index}}</div>
         <div div-data="{{this._id}}" div-id="view-detail"
             class="col xl-4 md-2_5 text-link container__courses-user-table-item text-short">{{this.name}}</div>
         <div class="col xl md container__courses-user-table-item">{{this.level.name}}</div>

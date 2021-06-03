@@ -30,59 +30,31 @@
             </div>
         </div>
         <div class="col xl-0_5 md-0_5 text-center container__courses-user-heading-item">
-            <span class="container__courses-user-heading-item-text">#</span>
+            <span class="container__courses-user-heading-item-text">ID</span>
             <div class="container__courses-user-heading-item-icon">
-                <span class="material-icons-outlined">
-                    arrow_drop_up
-                </span>
-                <span class="material-icons-outlined">
-                    arrow_drop_down
-                </span>
+                {{{sortable 'index' _sort}}}
             </div>
         </div>
         <div class="col xl-4 md-2_5 container__courses-user-heading-item">
             <span class="text-center container__courses-user-heading-item-text">Name</span>
             <div class="container__courses-user-heading-item-icon">
-                <span class="material-icons-outlined">
-                    arrow_drop_up
-                </span>
-                <span class="material-icons-outlined">
-                    arrow_drop_down
-                </span>
+                {{{sortable 'name' _sort}}}
             </div>
         </div>
         <div class="col xl md text-center container__courses-user-heading-item">
             <span class="text-center container__courses-user-heading-item-text">Level</span>
             <div class="container__courses-user-heading-item-icon">
-                <span class="material-icons-outlined">
-                    arrow_drop_up
-                </span>
-                <span class="material-icons-outlined">
-                    arrow_drop_down
-                </span>
+                {{{sortable 'level' _sort}}}
             </div>
         </div>
         <div class="col xl-2 md-1_5 text-center container__courses-user-heading-item">
             <span class="text-center container__courses-user-heading-item-text">Deleted At</span>
             <div class="container__courses-user-heading-item-icon">
-                <span class="material-icons-outlined">
-                    arrow_drop_up
-                </span>
-                <span class="material-icons-outlined">
-                    arrow_drop_down
-                </span>
+                {{{sortable 'createdAt' _sort}}}
             </div>
         </div>
         <div class="col xl-2 md text-center container__courses-user-heading-item">
             <span class="text-center container__courses-user-heading-item-text">Controls</span>
-            <div class="container__courses-user-heading-item-icon">
-                <span class="material-icons-outlined">
-                    arrow_drop_up
-                </span>
-                <span class="material-icons-outlined">
-                    arrow_drop_down
-                </span>
-            </div>
         </div>
     </div>
     {{#each courses}}
@@ -90,7 +62,7 @@
         <div class="col xl-0_5 md-0_5 text-center container__courses-user-table-item">
             <input input-data="{{this._id}}" type="checkbox" name="ckbItem">
         </div>
-        <div class="col xl-0_5 md-0_5 text-center container__courses-user-table-item">{{sum @index 1}}</div>
+        <div class="col xl-0_5 md-0_5 text-center container__courses-user-table-item">{{this.index}}</div>
         <div div-data="{{this._id}}" div-id="view-detail"
             class="col xl-4 md-2_5 text-link container__courses-user-table-item text-short">{{this.name}}</div>
         <div class="col xl md container__courses-user-table-item">{{this.level.name}}</div>
