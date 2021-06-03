@@ -3,6 +3,7 @@ import mongooseDelete from 'mongoose-delete';
 import slug from 'mongoose-slug-updater';
 import AutoIncrement from 'mongoose-sequence';
 
+// Add plugin
 mongoose.plugin(slug);
 
 const _AutoIncrement = AutoIncrement(mongoose);
@@ -10,17 +11,13 @@ const Schema = mongoose.Schema;
 
 const courseSchema = new Schema(
     {
-        index: { type: Number },
         name: { type: String, maxLength: 255 },
-        slug: {
-            type: String,
-            slug: 'name',
-            unique: true,
-        },
+        slug: { type: String, slug: 'name', unique: true },
         description: { type: String, maxLength: 600 },
         mediaId: { type: String, maxLength: 255 },
         level: { type: Schema.Types.ObjectId, ref: 'course-level' },
         author: { type: Schema.Types.ObjectId, ref: 'author' },
+        index: { type: Number },
     },
     { timestamps: true },
 );

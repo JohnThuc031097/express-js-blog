@@ -98,11 +98,8 @@ export default (() => {
 
             return (() => {
                 try {
-                    [authors, courseLevels].forEach((docs) => {
+                    [authors, courseLevels, courses].forEach((docs) => {
                         docs.forEach(async (doc) => await doc.save());
-                    });
-                    courses.forEach(async (doc) => {
-                        await doc.save();
                     });
                     console.log('[Database] Init OK!');
                     return true;
