@@ -5,14 +5,18 @@ import AutoIncrement from 'mongoose-sequence';
 
 mongoose.plugin(slug);
 
-const _AutoIncrement = AutoIncrement(mongoose.connection);
+const _AutoIncrement = AutoIncrement(mongoose);
 const Schema = mongoose.Schema;
 
 const courseSchema = new Schema(
     {
         index: { type: Number },
         name: { type: String, maxLength: 255 },
-        slug: { type: String, slug: 'name', unique: true },
+        slug: {
+            type: String,
+            slug: 'name',
+            unique: true,
+        },
         description: { type: String, maxLength: 600 },
         mediaId: { type: String, maxLength: 255 },
         level: { type: Schema.Types.ObjectId, ref: 'course-level' },

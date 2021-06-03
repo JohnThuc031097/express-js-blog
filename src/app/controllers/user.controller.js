@@ -332,6 +332,7 @@ const UserController = {
     },
     // [PUT] /:idUser/courses/api/:idCourse
     async courseUpdate(req, res, next) {
+        const idUser = req.params?.idUser;
         const idCourse = req.params?.idCourse;
         const course = req?.body;
         await CourseLevelModel.findById(course?.level)
@@ -341,7 +342,7 @@ const UserController = {
             .catch(next);
         await CourseModel.findByIdAndUpdate(idCourse, course)
             .then(() => {
-                res.redirect('back');
+                res.redirect(`/user/${idUser}/courses/page/`);
             })
             .catch(next);
     },
